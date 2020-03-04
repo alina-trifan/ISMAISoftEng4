@@ -1,5 +1,5 @@
-# turmaA - Parque de estacionamento
-Repositório base para a aula 4 de Engenharia de Software - ISMAI turma A.
+# Parque de estacionamento
+Repositório base para a aula 4 de Engenharia de Software - ISMAI.
 
 Desenvolva um programa que simule o acesso de carros a um estacionamento pago. Deve implementar e testar individualmente cada uma das seguintes alíneas com funções, necessárias a uma correta resolução do problema. 
 
