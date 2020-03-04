@@ -16,7 +16,7 @@ e.	Escreva uma função que peça ao utilizador a informação referente à util
 f.	Escreva uma função que permita escrever num ficheiro, com o nome “parque.csv”, todos os acessos ao parque, ordenados por ordem inversa da duração do estacionamento. Deverá escrever um acesso por linha, sendo os campos separados por um ‘;’. A função deverá receber como argumento uma variável contendo a informação sobre todos os acessos introduzidos.
 
 g.	Escreva uma função que permita criar uma fatura para um certo NIF, pedido ao utilizador. A fatura deverá conter todos os acessos dos veículos registados para o NIF em questão, bem como o cálculo do total faturado. Considere que o preço por minuto é um cêntimo. A função deverá receber como argumento a informação relativa a todos os veículos registados e a todas as utilizações do parque. Tenha em consideração o formato de impressão de acordo com o exemplo de interação apresentado no final deste enunciado.
-
+```python
 Opcoes disponiveis:
 0 - Terminar
 1 - Ler ficheiro de clientes
@@ -25,26 +25,26 @@ Opcoes disponiveis:
 4 - Adicionar acesso ao parque
 5 - Gravar acessos ao parque
 6 - Gerar fatura para um cliente
-Opcao? 3
+Opcao: 3
 3
 Não existem clientes!
 
 Opcoes disponiveis:
 [Impressao das varias opcoes]
-Opcao? 5
+Opcao: 5
 5
 Não existem entradas no Parque!
 
 Opcoes disponiveis:
 [Impressao das varias opcoes]
-Opcao? 1
-Nome do ficheiro? ep1.csv
+Opcao: 1
+Nome do ficheiro: ep1.csv
 Foram importados 6 registos.
 
 
 Opcoes disponiveis:
 [Impressao das varias opcoes]
-Opcao? 2
+Opcao: 2
 100100100 : ('50-UA-50', 'Honda')
 100200300 : ('11-AB-11', 'Ford')
 100200300 : ('99-XY-99', 'Lancia')
@@ -54,7 +54,7 @@ Opcao? 2
 
 Opcoes disponiveis:
 [Impressao das varias opcoes]
-Opcao? 3
+Opcao: 3
 801401501 : ['00-AA-00']
 901401101 : ['00-ZZ-00', '10-CD-10']
 100200300 : ['11-AB-11', '99-XY-99']
@@ -62,33 +62,33 @@ Opcao? 3
 
 Opcoes disponiveis:
 [Impressao das varias opcoes]
-Opcao? 4
-Matricula? 11-AB-11
-Duracao? 30
+Opcao: 4
+Matricula: 11-AB-11
+Duracao: 30
 
 Opcoes disponiveis:
 [Impressao das varias opcoes]
-Opcao? 4
-Matricula? AA1748
-Invalida! Matricula? 99-XY-99
-Duracao? 120
+Opcao: 4
+Matricula: AA1748
+Invalida! Matricula: 99-XY-99
+Duracao: 120
 
 Opcoes disponiveis:
 [Impressao das varias opcoes]
-Opcao? 4
-Matricula? 50-UA-50
-Duracao? -60
-Invalida! Duracao? 60
+Opcao: 4
+Matricula: 50-UA-50
+Duracao: -60
+Invalida! Duracao: 60
 
 Opcoes disponiveis:
 [Impressao das varias opcoes]
-Opcao? 5
+Opcao: 5
 Ficheiro gravado com sucesso!
 
 Opcoes disponiveis:
 [Impressao das varias opcoes]
-Opcao? 6
-NIF? 100200300
+Opcao: 6
+NIF: 100200300
 Fatura NIF: 100200300
 Matricula  Marca             Duracao    Custo
 11-AB-11   Ford                   30     0.30
@@ -97,8 +97,8 @@ Total:                                   1.50
 
 Opcoes disponiveis:
 [Impressao das varias opcoes]
-Opcao? 6
-NIF? 100100100
+Opcao: 6
+NIF: 100100100
 [('50-UA-50', 'Honda', '100100100', -60)]
 Fatura NIF: 100100100
 Matricula  Marca             Duracao    Custo
@@ -107,6 +107,7 @@ Total:                                   0.60
 
 Opcoes disponiveis:
 [Impressao das varias opcoes]
-Opcao? 0
+Opcao: 0
 Obrigado por usar o nosso software!
+```
 
