@@ -16,8 +16,12 @@ def menu(text):
     return o
 
 
-def loadClients ():
-    ...
+def loadClients ():   
+    import csv
+    with open('ep1.csv', newline='') as csvfile:      
+        reader = csv.reader(csvfile)
+        data = list(reader)  
+    return data 
 
 
 def printClients(v):
@@ -50,13 +54,14 @@ operations = []
 op = menu(True)
 
 while True:
-   ## op = menu(False)
+    #op = menu(False)
     if op == 0:
         print('Obrigado por usar o nosso software!')
         break
         
     elif op == 1:
-        vehicles += loadClients()
+        vehicles += loadClients()    
+        print("Clients List Loaded!")
         
     elif op == 2:
         printClients(vehicles)
@@ -71,4 +76,6 @@ while True:
         saveEntries(operations)
         
     elif op == 6:
-        invoice(vehicles, operations)
+        invoice(vehicles, operations) 
+    if op != 0:
+        op = menu(True)
