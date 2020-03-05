@@ -50,10 +50,10 @@ operations = []
 op = menu(True)
 
 while True:
-    op = menu(False)
+   ## op = menu(False)
     if op == 0:
         print('Obrigado por usar o nosso software!')
-        break;
+        break
         
     elif op == 1:
         vehicles += loadClients()
