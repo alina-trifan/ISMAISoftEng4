@@ -18,9 +18,12 @@ def menu(text):
 
 def loadClients ():   
     import csv
-    with open('ep1.csv', newline='') as csvfile:      
+    file_name = 'ep1.csv'
+    with open(file_name, newline='') as csvfile:      
         reader = csv.reader(csvfile)
         data = list(reader)  
+    print("Nome do ficheiro: "+file_name)
+    print("Foram importados "+str(len(data))+" registos")
     return data 
 
 
@@ -60,9 +63,8 @@ while True:
         break
         
     elif op == 1:
-        vehicles += loadClients()    
-        print("Clients List Loaded!")
-        
+        vehicles += loadClients()
+
     elif op == 2:
         printClients(vehicles)
 
