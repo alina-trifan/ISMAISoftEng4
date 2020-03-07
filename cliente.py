@@ -1,4 +1,5 @@
 from veiculo import Veiculo
+from operator import itemgetter
 
 class Cliente:
 
@@ -8,7 +9,7 @@ class Cliente:
 
     def adicionarVeiculo(self,l_matricula, l_marca):
         self.__automoveis.append(Veiculo(l_matricula, l_marca))
-        self.__automoveis = self.ordenarVeiculos()
+        self.ordenarVeiculos()
 
     def removerVeiculo(self, l_veiculo):
         self.__automoveis.remove(l_veiculo)
@@ -25,23 +26,13 @@ class Cliente:
         return False
 
     def ordenarVeiculos(self):
-        l_listaTemp = self.__automoveis.copy()
-        for element in self.__automoveis:
-            for i in range(len(self.__automoveis)):
-                if element.getMatricula() < self.__automoveis[i].getMatricula() and element.getMatricula() != self.__automoveis[i]:
-                    if not self.__automoveis:
-                        l_listaTemp.append(element)
-                    else:
-                        l_listaTemp.remove(element)
-                        l_listaTemp.insert(i, element)
-        return l_listaTemp
-
+        self.__automoveis = sorted(self.__automoveis, key=lambda veiculo: veiculo.getMatricula()).copy()
 
     def numeroVeiculos(self):
         return len(self.__automoveis)
 
     def getNif(self):
-        return self.__nif
+        return str(self.__nif)
 
     def getVeiculoIndex(self, l_index):
         return self.__automoveis[l_index]

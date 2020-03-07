@@ -50,11 +50,13 @@ def loadClients ():
                     contadorEntradas += 1
         return listaClienteVeiculo
 
-def printClients(l_listaVeiculos):
-    for i in range(len(vehicles)):
-        print('\n'+str(vehicles[i]))
-        for index in range(vehicles[i].numeroVeiculos()):
-            print('     '+str(vehicles[i].getVeiculoIndex(index)))
+def printClients(l_listaVeiculosCliente):
+    l_listaVeiculosCliente = sorted(l_listaVeiculosCliente, key=lambda cliente: cliente.getNif()).copy()
+    for i in range(len(l_listaVeiculosCliente)):
+        print('\n'+str(l_listaVeiculosCliente[i])+'\n')
+        print('     Matrícula  Marca')
+        for index in range(l_listaVeiculosCliente[i].numeroVeiculos()):
+            print('     '+str(l_listaVeiculosCliente[i].getVeiculoIndex(index)))
 
 def saveEntries(l):
     ...

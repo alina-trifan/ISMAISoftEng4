@@ -11,7 +11,7 @@ class Veiculo:
         return {'Matricula':self.__matricula, 'Marca':self.__marca}
 
     def __str__(self):
-        return 'Matricula = '+self.__matricula+', Marca = '+str(self.__marca)
+        return str(self.__matricula)+'   '+str(self.__marca)
 
     def copy(self):
         newcopy = self
