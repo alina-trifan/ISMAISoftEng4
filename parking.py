@@ -72,8 +72,13 @@ def matches(s, pattern):
     ...
 
 
-def printClientPlates(c):
-    ...
+def printClientPlates(l_listaVeiculosCliente):
+    l_listaVeiculosCliente = sorted(l_listaVeiculosCliente, key=lambda cliente: cliente.getNif()).copy()
+    for i in range(len(l_listaVeiculosCliente)):
+        print('\n'+str(l_listaVeiculosCliente[i])+'\n')
+        print('     Matrículas:')
+        for index in range(l_listaVeiculosCliente[i].numeroVeiculos()):
+            print('     '+str(l_listaVeiculosCliente[i].getVeiculoIndex(index).getMatricula()))
 
 
 def invoice(c, o):
