@@ -1,11 +1,11 @@
 class Veiculo:
 
-    def __init__(self, l_matricula, l_marca="indefinido"):
-        self.__matricula = l_matricula
+    def __init__(self, l_matricula, l_marca="indefinida"):
+        self.__matricula = str(l_matricula)
         self.__marca = l_marca
 
     def getMatricula(self):
-        return self.__matricula
+        return str(self.__matricula)
 
     def __repr__(self):
         return {'Matricula':self.__matricula, 'Marca':self.__marca}

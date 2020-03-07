@@ -42,6 +42,7 @@ def loadClients ():
                     for i in range(len(listaClienteVeiculo)):
                         if listaClienteVeiculo[i] == l_cliente and listaClienteVeiculo[i].verificarVeiculo(l_veiculo) == False:
                             listaClienteVeiculo[i].adicionarVeiculo(row[0], row[1])
+                            listaClienteVeiculo[i].ordenarVeiculos()
                             contadorEntradas += 1
                 else:
                     l_cliente.adicionarVeiculo(row[0], row[1])
