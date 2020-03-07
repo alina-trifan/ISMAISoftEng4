@@ -1,6 +1,4 @@
 class Veiculo:
-    matricula = ""#redundante
-    marca = ""#redundante
 
     def __init__(self, l_matricula, l_marca="indefinido"):
         self.__matricula = l_matricula

@@ -1,8 +1,6 @@
 from veiculo import Veiculo
 
 class Cliente:
-    __nif = "";#redundante
-    __automoveis = [];#redundante
 
     def __init__(self, l_nif, l_automoveis=[]):
         self.__nif = l_nif
@@ -13,6 +11,9 @@ class Cliente:
 
     def removerVeiculo(self, l_veiculo):
         self.__automoveis.remove(l_veiculo)
+
+    def removerTodosVeiculo(self):
+        self.__automoveis = []
 
     def verificarVeiculo(self, l_veiculo):
         for i in range(self.numeroVeiculos()):
