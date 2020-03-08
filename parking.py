@@ -1,3 +1,5 @@
+import csv
+import operator
 def menu(text):
     print()
     print('Opcoes disponiveis:')
@@ -13,15 +15,24 @@ def menu(text):
         print('[Impressao das varias opcoes]')
         
     o = int(input('Opcao? '))
-    return o
+    return o   
 
 
-def loadClients ():
-    ...
-
+def loadClients():
+    with open('ep1.csv') as csv_file:
+        read = csv.reader (csv_file, delimiter=';')
+        cont = 0
+        vehicle=[]
+        for row in read:
+            cont += 1
+            vehicle.append(row)
+        print(f'Foram importados {cont} registos.')
+        return vehicle
 
 def printClients(v):
-    ...
+    sort = sorted(vehicles,key=operator.itemgetter(2))
+    for row in sort:
+        print(f'\t{row[2]} : ({row[0]}, {row[1]})')
         
 def saveEntries(l):
     ...
@@ -31,7 +42,7 @@ def addParkEntry():
     
 
 def validPlate(s):
-	...
+    ...
 
 def matches(s, pattern):
     ...
@@ -42,7 +53,8 @@ def printClientPlates(c):
 
 
 def invoice(c, o):
-    ...
+     ...
+
 
 ###############################################################################
 vehicles = []
@@ -50,7 +62,7 @@ operations = []
 op = menu(True)
 
 while True:
-   ## op = menu(False)
+    op = menu(False)
     if op == 0:
         print('Obrigado por usar o nosso software!')
         break
