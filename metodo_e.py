@@ -1,11 +1,11 @@
 def addParkEntry():
+    entrada = []
     print("Qual o seu NIF?")
     print("Insira a matrícula:")
     matricula = input()
     while(validPlate(matricula) != True):
         print("Matrícula Inválida, as matrículas têm de ter um formato 00-XX-00, insira novamente:")
-        matricula = input()
-        
+        matricula = input()    
     entrada.append(matricula)   
     print("Insira a duração:")
     tempo = int(input())
