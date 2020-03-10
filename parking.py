@@ -1,4 +1,4 @@
-1def menu(text):
+def menu(text):
     print()
     print('Opcoes disponiveis:')
     if text:
