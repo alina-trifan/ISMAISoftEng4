@@ -1,3 +1,5 @@
+import csv
+import operator
 def menu(text):
     print()
     print('Opcoes disponiveis:')
@@ -17,8 +19,16 @@ def menu(text):
 
 
 def loadClients ():
-    ...
-
+    with open('ep1.csv') as csv_file:
+        reader = csv.reader(csv_file, delimiter=';')
+        vehicles = []
+        contador = 0
+        for row in reader:
+            contador += 1
+            vehicles.append(row)
+        print(f'Nome do ficheiro: ep1.csv')
+        print(f'Foram importados {contador} registos.')
+        return vehicles
 
 def printClients(v):
     ...
@@ -50,7 +60,7 @@ operations = []
 op = menu(True)
 
 while True:
-   ## op = menu(False)
+    op = menu(False)
     if op == 0:
         print('Obrigado por usar o nosso software!')
         break
