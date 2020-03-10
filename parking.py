@@ -1,4 +1,4 @@
-def menu(text):
+1def menu(text):
     print()
     print('Opcoes disponiveis:')
     if text:
@@ -38,8 +38,9 @@ def saveEntries(l):
 def addParkEntry():
    ...
     
-
-def validPlate(s):
+# d.	Escreva uma função que valide se uma string, passada como argumento, representa uma matrícula válida em Portugal. Considere apenas matrículas 
+# posteriores a 2005 compostas por letras no meio como no seguinte exemplo: 00-AA-00. A função deverá devolver um valor lógico Verdadeiro se a matrícula for válida e Falso, caso contrário.
+def validPlate(s):      
 	...
 
 def matches(s, pattern):
