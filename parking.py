@@ -19,9 +19,9 @@ def menu(text):
 def loadClients ():   
     import csv
     file_name = 'ep1.csv'
-    with open(file_name, newline='') as csvfile:      
-        reader = csv.reader(csvfile)
-        data = list(reader)  
+    with open(file_name, newline='') as csvfile:
+        reader = csv.reader(csvfile, delimiter=';')
+        data = list(reader)      
     print("Nome do ficheiro: "+file_name)
     print("Foram importados "+str(len(data))+" registos")
     return data 
