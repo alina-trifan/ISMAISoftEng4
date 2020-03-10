@@ -28,7 +28,9 @@ def loadClients ():
 
 
 def printClients(v):
-    ...
+   s = sorted(v, key = lambda x: (x[2], x[1]))
+   for client in s:
+    print("Numero Contribuinte", client[2]+" : ('""Matricula : "+client[0]+"','" "Marca : "+client[1]+"')")
         
 def saveEntries(l):
     ...
