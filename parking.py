@@ -1,3 +1,6 @@
+import csv
+import operator
+import re
 def menu(text):
     print()
     print('Opcoes disponiveis:')
@@ -13,26 +16,48 @@ def menu(text):
         print('[Impressao das varias opcoes]')
         
     o = int(input('Opcao? '))
-    return o
+    return o   
 
 
-def loadClients ():
-    ...
-
-
+def loadClients():
+    with open('ep1.csv') as csv_file:
+        reader = csv.reader(csv_file, delimiter=';')
+        contador = 0
+        vehicles = []
+        for row in reader:
+            contador += 1
+            vehicles.append(row)
+        print(f'Nome do ficheiro: ep1.csv')
+        print(vehicles)
+        print(f'Foram importados {contador} registos.')
+        return vehicles
 def printClients(v):
-    ...
-        
+    lista = vehicles
+    lista.sort(key=operator.itemgetter(2))
+    for row in lista:
+        print(f'{row[2]} : ({row[0]}, {row[1]})')
 def saveEntries(l):
     ...
         
 def addParkEntry():
-   ...
-    
-
+    registos = []
+    matricula = input("Matricula:")
+    while(validPlate(matricula) != True):
+        print("Matrícula inválida!!")
+        matricula = input("Matricula:")
+    registos.append(matricula)
+    duracao = input("Duracao:")
+    if duracao.isnumeric() and int(duracao) >= 1:
+        registos.append(duracao)
+    else:
+        print("A duracao tem que ser superior a 1!")
+        duracao = input("Duracao:")
+        registos.append(duracao)
+    print(f'Matricula registada:{matricula} Duracao:{duracao}')
+    return(registos)
 def validPlate(s):
-	...
-
+    plate_format = bool(re.search('[0-9]{2}[-][A-Z]{2}[-][0-9]{2}', s))
+    return plate_format
 def matches(s, pattern):
     ...
     
@@ -42,7 +67,8 @@ def printClientPlates(c):
 
 
 def invoice(c, o):
-    ...
+     ...
+
 
 ###############################################################################
 vehicles = []
@@ -53,7 +79,7 @@ while True:
     op = menu(False)
     if op == 0:
         print('Obrigado por usar o nosso software!')
-        break;
+        break
         
     elif op == 1:
         vehicles += loadClients()
@@ -72,3 +98,4 @@ while True:
         
     elif op == 6:
         invoice(vehicles, operations)
+
