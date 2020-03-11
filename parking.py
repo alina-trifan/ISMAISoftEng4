@@ -19,11 +19,19 @@ def menu(text):
 
 
 def loadClients ():
-   
+    with open('ep1.csv') as csv_file:
+        reader = csv.reader(csv_file, delimiter=';')
+        vehicles = []
+        contador = 0
+        for row in reader:
+            contador += 1
+            vehicles.append(row)
+        print(f'Nome do ficheiro: ep1.csv')
+        print(f'Foram importados {contador} registos.')
+        return vehicles
 
 def printClients(v):
     ...
-        
 def saveEntries(l):
     ...
         
@@ -32,7 +40,19 @@ def addParkEntry():
     
 
 def validPlate(s):
-	...
+    from re import compile
+    
+    plate_format = compile('^[0-9]{2}[-][A-Z]{2}[-][0-9]{2}$')
+
+    
+
+    plates = ["00-AA-00", "00-ZZ-00", "11-AB-11", "99-XY-99", "99-XY-99", "50-UA-50"]
+
+    for plate in plates:
+        if plate_format.match(plate) is not None:
+            print ("Correct plate")
+        else:
+            print ("Incorrect plate")
 
 def matches(s, pattern):
     ...
