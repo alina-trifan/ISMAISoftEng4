@@ -3,12 +3,33 @@ from operator import itemgetter
 
 class Cliente:
 
-    def __init__(self, l_nif, l_automoveis=[]):
-        self.__nif = l_nif
-        self.__automoveis = l_automoveis
+    def __init__(self, nif, automoveis=[]):
+        self.setNif(nif)
+        self.setAutomoveis(automoveis)
 
-    def adicionarVeiculo(self,l_matricula, l_marca):
-        self.__automoveis.append(Veiculo(l_matricula, l_marca))
+    def getNif(self):
+        return str(self.__nif)
+
+    def getAutomoveis(self):
+        return self.__automoveis
+
+    def setNif(self,nif):
+        if  int(nif) < 0:
+            self.__nif = "Nope"
+        elif len(str(nif)) < 9 or str(nif).isnumeric() == False:
+            self.__nif = None
+        else:
+            self.__nif = nif
+
+    def setAutomoveis(self,automoveis):
+        if  isinstance(automoveis, list) or all(isinstance(x, Veiculo) for x in automoveis) == False:
+            self.__automoveis = []
+        else:
+            self.__automoveis = automoveis
+
+
+    def adicionarVeiculo(self,matricula, marca):
+        self.__automoveis.append(Veiculo(matricula, marca))
         self.ordenarVeiculos()
 
     def removerVeiculo(self, l_veiculo):
@@ -31,14 +52,12 @@ class Cliente:
     def numeroVeiculos(self):
         return len(self.__automoveis)
 
-    def getNif(self):
-        return str(self.__nif)
 
     def getVeiculoIndex(self, l_index):
         return self.__automoveis[l_index]
 
     def __repr__(self):
-        return {'NIF':self.__nif}
+        return {'NIF':self.getNif()}
 
     def __str__(self):
         return 'NIF = '+self.getNif()

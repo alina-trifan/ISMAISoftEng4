@@ -34,24 +34,27 @@ def loadClients ():
     with open('ep1.csv') as csv_file:
         reader = csv.reader(csv_file, delimiter = ';')
         for row in reader:
-            l_cliente = Cliente(row[2])
-            l_cliente.removerTodosVeiculo()
-            if not listaClienteVeiculo:
-                l_cliente.adicionarVeiculo(row[0], row[1])
-                listaClienteVeiculo.append(l_cliente)
-                contadorEntradas += 1
+            if int(row[2]) < 0 or len(str(row[2])) < 9 or str(row[2]).isnumeric() == False:
+                pass
             else:
-                if l_cliente in listaClienteVeiculo:
-                    l_veiculo = Veiculo(row[0], row[1])
-                    for i in range(len(listaClienteVeiculo)):
-                        if listaClienteVeiculo[i] == l_cliente and listaClienteVeiculo[i].verificarVeiculo(l_veiculo) == False:
-                            listaClienteVeiculo[i].adicionarVeiculo(row[0], row[1])
-                            listaClienteVeiculo[i].ordenarVeiculos()
-                            contadorEntradas += 1
-                else:
+                l_cliente = Cliente(row[2])
+                l_cliente.removerTodosVeiculo()
+                if not listaClienteVeiculo:
                     l_cliente.adicionarVeiculo(row[0], row[1])
                     listaClienteVeiculo.append(l_cliente)
                     contadorEntradas += 1
+                else:
+                    if l_cliente in listaClienteVeiculo:
+                        l_veiculo = Veiculo(row[0], row[1])
+                        for i in range(len(listaClienteVeiculo)):
+                            if listaClienteVeiculo[i] == l_cliente and listaClienteVeiculo[i].verificarVeiculo(l_veiculo) == False:
+                                listaClienteVeiculo[i].adicionarVeiculo(row[0], row[1])
+                                listaClienteVeiculo[i].ordenarVeiculos()
+                                contadorEntradas += 1
+                    else:
+                        l_cliente.adicionarVeiculo(row[0], row[1])
+                        listaClienteVeiculo.append(l_cliente)
+                        contadorEntradas += 1
         return listaClienteVeiculo
 
 def printClients(l_listaVeiculosCliente):
@@ -63,28 +66,28 @@ def printClients(l_listaVeiculosCliente):
             print('     '+str(l_listaVeiculosCliente[i].getVeiculoIndex(index)))
 
 def saveEntries(combine):
-	
+
     with open ('parque.csv', mode='a', newline='') as parque_file:
         parque_writer = csv.writer(parque_file, delimiter=';')
         for x in range(0, len(combine)-1,2):
-            parque_writer.writerow([combine[x]]+[str(combine[x+1])])        
+            parque_writer.writerow([combine[x]]+[str(combine[x+1])])
     print(("Ficheiro gravado com sucesso"))
-    combine = []   
-
-def addParkEntry():
-    global combine 
     combine = []
 
-    while True:     
+def addParkEntry():
+    global combine
+    combine = []
+
+    while True:
         m1, plateFlag = validPlate()
         if (m1!='0' and m1 !=''):
-            while True:                
+            while True:
                 if plateFlag == True:
-                    break 
+                    break
                 else:
                     print("Valor inválido")
                     m1, plateFlag = validPlate()
-            
+
             while True:
                 d1, durationFlag, exitFlag = Duracao.validDuration()
                 if durationFlag == True:
@@ -92,21 +95,21 @@ def addParkEntry():
         else:
             break
 
-        if exitFlag == 0:  
+        if exitFlag == 0:
             combine.append(m1)
             combine.append(d1)
 
 
 def validPlate():
-	
-	
+
+
     model8 = re.compile('^\d{2}[-][A-Z]{2}[-]\d{2}$')
     model6 = re.compile('^\d{2}[A-Z]{2}\d{2}$')
     m = input("Digite a matricula (0 ou Enter para sair): ")
-    m = m.upper();    
+    m = m.upper();
 
     if len(m) == 8 and model8.match(m):
-        print("Matricula: ", m) 
+        print("Matricula: ", m)
         return m, True
 
     elif len(m) == 6 and model6.match(m):
@@ -114,7 +117,7 @@ def validPlate():
         correcao = list(m)
         m = (correcao[0]+correcao[1]+"-"+correcao[2]+correcao[3]+"-"+correcao[4]+correcao[5]);
         print("Correção: ", m)
-        return m, True            
+        return m, True
 
     else:
         return m, False
