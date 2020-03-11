@@ -18,8 +18,9 @@ def invoice ():
 
     i = 0
     preco = 0
-    #duracao = 20
     infoVehicles = loadClients()
+    #assumindo uma duracao de 20mins
+    duracao = 20
 
     #verificar se nif é valor positivo
     while i != 1:
@@ -33,11 +34,13 @@ def invoice ():
 
     print('\nMatricula Marca Duracao Custo')
     #verificar se NIF existe nos dados de entrada associados a matriculas
+    #assumindo uma duracao de 20mins
     for row in infoVehicles:
         for item in row:
             if item == nif:
                 print(row[0],'', row[1],'  ' ,duracao, ' ', preco)
     #verificar qual a duracao do veiculo
+
 
 
     #sair do programa
