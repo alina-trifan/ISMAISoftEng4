@@ -1,10 +1,14 @@
 import csv
+import re
+
 #Importação dos ficheiros de classes
 from cliente import Cliente
 from veiculo import Veiculo
+from duracao import Duracao
 
 #Variavel para guardar entradas
 contadorEntradas = 0
+combine = 0
 
 def menu(text):
     print()
@@ -58,15 +62,63 @@ def printClients(l_listaVeiculosCliente):
         for index in range(l_listaVeiculosCliente[i].numeroVeiculos()):
             print('     '+str(l_listaVeiculosCliente[i].getVeiculoIndex(index)))
 
-def saveEntries(l):
-    ...
+def saveEntries(combine):
+	
+    with open ('parque.csv', mode='a', newline='') as parque_file:
+        parque_writer = csv.writer(parque_file, delimiter=';')
+        for x in range(0, len(combine)-1,2):
+            parque_writer.writerow([combine[x]]+[str(combine[x+1])])        
+    print(("Ficheiro gravado com sucesso"))
+    combine = []   
 
 def addParkEntry():
-   ...
+    global combine 
+    combine = []
+
+    while True:     
+        m1, plateFlag = validPlate()
+        if (m1!='0' and m1 !=''):
+            while True:                
+                if plateFlag == True:
+                    break 
+                else:
+                    print("Valor inválido")
+                    m1, plateFlag = validPlate()
+            
+            while True:
+                try: 
+                    d1, durationFlag, exitFlag = Duracao.validDuration()
+                    if durationFlag == True:
+                        break
+                except:
+                    continue
+        else:
+            break
+
+        if exitFlag == 0:  
+            combine.append(m1)
+            combine.append(d1)
 
 
-def validPlate(s):
-	...
+def validPlate():
+	
+    model8 = re.compile('^\d{2}[-][A-Z]{2}[-]\d{2}$')
+    model6 = re.compile('^\d{2}[A-Z]{2}\d{2}$')
+    m = input("Digite a matricula (0 ou Enter para sair): ")
+    m = m.upper();    
+
+    if len(m) == 8 and model8.match(m): 
+        return m, True
+
+    elif len(m) == 6 and model6.match(m):
+        print("Valor inválido")
+        correcao = list(m)
+        m = (correcao[0]+correcao[1]+"-"+correcao[2]+correcao[3]+"-"+correcao[4]+correcao[5]);
+        print("Correção: ", m)
+        return m, True            
+
+    else:
+        return m, False
 
 def matches(s, pattern):
     ...
