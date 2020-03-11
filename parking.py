@@ -1,3 +1,4 @@
+import re
 def menu(text):
     print()
     print('Opcoes disponiveis:')
