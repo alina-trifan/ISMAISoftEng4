@@ -133,7 +133,27 @@ def printClientPlates(l_listaVeiculosCliente):
 
 
 def invoice(c, o):
-    ...
+    fatura = []
+
+    custo = 0
+    total = 0
+    
+    nif = int(input("Introduza o seu NIF: "))
+
+    while nif < 0 or nif > 999999999:
+        print("NIF inválido, introduza de novo!")
+        nif = int(input("Introduza o seu NIF: "))
+        
+    if 0 < nif <= 999999999:
+        fatura.insert(0, nif)
+
+    custo = (0.01 * Duracao)
+    
+    fatura.insert(custo)
+    
+
+    print(fatura)
+    
 
 ###############################################################################
 vehicles = []
