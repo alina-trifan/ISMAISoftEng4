@@ -1,3 +1,4 @@
+
 import csv
 import operator
 def menu(text):
@@ -15,45 +16,34 @@ def menu(text):
         print('[Impressao das varias opcoes]')
         
     o = int(input('Opcao? '))
-    return o
+    return o   
 
 
-def loadClients ():
+def loadClients():
     with open('ep1.csv') as csv_file:
         reader = csv.reader(csv_file, delimiter=';')
-        vehicles = []
         contador = 0
+        vehicles = []
         for row in reader:
             contador += 1
             vehicles.append(row)
         print(f'Nome do ficheiro: ep1.csv')
+        print(vehicles)
         print(f'Foram importados {contador} registos.')
         return vehicles
-
 def printClients(v):
-    
+    print("Não existe nehum registo")
     lista = vehicles
     lista.sort(key=operator.itemgetter(2))
     for row in lista:
         print(f'{row[2]} : ({row[0]}, {row[1]})')
-   
 def saveEntries(l):
     ...
         
 def addParkEntry():
-   ...
-    
-
+    ...
 def validPlate(s):
-    from re import compile
-    
-    plate_format = compile('^[0-9]{2}[-][A-Z]{2}[-][0-9]{2}$')
-
-    for plate in vehicles:
-        if plate_format.match(plate) is not None:
-            return True
-        else:
-            return False
+    ...
 
 def matches(s, pattern):
     ...
@@ -64,7 +54,8 @@ def printClientPlates(c):
 
 
 def invoice(c, o):
-    ...
+     ...
+
 
 ###############################################################################
 vehicles = []
@@ -94,3 +85,4 @@ while True:
         
     elif op == 6:
         invoice(vehicles, operations)
+
