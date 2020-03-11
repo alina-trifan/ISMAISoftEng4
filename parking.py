@@ -31,7 +31,12 @@ def loadClients ():
         return vehicles
 
 def printClients(v):
-    ...
+    
+    lista = vehicles
+    lista.sort(key=operator.itemgetter(2))
+    for row in lista:
+        print(f'{row[2]} : ({row[0]}, {row[1]})')
+   
 def saveEntries(l):
     ...
         
@@ -44,15 +49,11 @@ def validPlate(s):
     
     plate_format = compile('^[0-9]{2}[-][A-Z]{2}[-][0-9]{2}$')
 
-    
-
-    plates = ["00-AA-00", "00-ZZ-00", "11-AB-11", "99-XY-99", "99-XY-99", "50-UA-50"]
-
-    for plate in plates:
+    for plate in vehicles:
         if plate_format.match(plate) is not None:
-            print ("Correct plate")
+            return True
         else:
-            print ("Incorrect plate")
+            return False
 
 def matches(s, pattern):
     ...
