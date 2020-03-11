@@ -86,12 +86,9 @@ def addParkEntry():
                     m1, plateFlag = validPlate()
             
             while True:
-                try: 
-                    d1, durationFlag, exitFlag = Duracao.validDuration()
-                    if durationFlag == True:
-                        break
-                except:
-                    continue
+                d1, durationFlag, exitFlag = Duracao.validDuration()
+                if durationFlag == True:
+                    break
         else:
             break
 
@@ -102,12 +99,14 @@ def addParkEntry():
 
 def validPlate():
 	
+	
     model8 = re.compile('^\d{2}[-][A-Z]{2}[-]\d{2}$')
     model6 = re.compile('^\d{2}[A-Z]{2}\d{2}$')
     m = input("Digite a matricula (0 ou Enter para sair): ")
     m = m.upper();    
 
-    if len(m) == 8 and model8.match(m): 
+    if len(m) == 8 and model8.match(m):
+        print("Matricula: ", m) 
         return m, True
 
     elif len(m) == 6 and model6.match(m):
