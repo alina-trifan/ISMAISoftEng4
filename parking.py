@@ -1,5 +1,6 @@
 import csv
 import re
+import pandas as pd
 
 #Importação dos ficheiros de classes
 from cliente import Cliente
@@ -67,57 +68,63 @@ def printClients(l_listaVeiculosCliente):
 
 def saveEntries(combine):
 
+    print("combine", combine)
     with open ('parque.csv', mode='a', newline='') as parque_file:
         parque_writer = csv.writer(parque_file, delimiter=';')
         for x in range(0, len(combine)-1,2):
-            parque_writer.writerow([combine[x]]+[str(combine[x+1])])
+            parque_writer.writerow([combine[x]]+[str(combine[x+1])])        
     print(("Ficheiro gravado com sucesso"))
-    combine = []
+    df = pd.read_csv('parque.csv', sep=';')
+    df.sort_values(by=['duracao'], ascending=False, inplace=True)
+    df.to_csv('parque.csv', sep=';', index=False)
+    combine = []  
 
 def addParkEntry():
-    global combine
+    global combine 
     combine = []
 
-    while True:
+    while True:     
         m1, plateFlag = validPlate()
         if (m1!='0' and m1 !=''):
-            while True:
-                if plateFlag == True:
-                    break
+            while True:                
+                if plateFlag == True:                    
+                    while True:
+                        d1, durationFlag, exitFlag = Duracao.validDuration()
+                        if durationFlag == True:                        
+                            if exitFlag == 0:
+                                combine.append(m1)
+                                combine.append(d1)
+                                print("combinex", combine)
+                                m1, plateFlag = validPlate()
+                        else:
+                            plateFlag = False                            
+                        break
+                elif (m1=='0' or m1 ==''):
+                    print("Obrigada por usar nosso software.")
+                    break   
                 else:
                     print("Valor inválido")
                     m1, plateFlag = validPlate()
-
-            while True:
-                d1, durationFlag, exitFlag = Duracao.validDuration()
-                if durationFlag == True:
-                    break
-        else:
-            break
-
-        if exitFlag == 0:
-            combine.append(m1)
-            combine.append(d1)
+        break
 
 
 def validPlate():
-
-
+	
     model8 = re.compile('^\d{2}[-][A-Z]{2}[-]\d{2}$')
     model6 = re.compile('^\d{2}[A-Z]{2}\d{2}$')
     m = input("Digite a matricula (0 ou Enter para sair): ")
-    m = m.upper();
+    m = m.upper();    
 
     if len(m) == 8 and model8.match(m):
-        print("Matricula: ", m)
+        print("Matricula: ", m) 
         return m, True
 
     elif len(m) == 6 and model6.match(m):
-        print("Valor inválido")
+        print("Valor necessita correção")
         correcao = list(m)
         m = (correcao[0]+correcao[1]+"-"+correcao[2]+correcao[3]+"-"+correcao[4]+correcao[5]);
         print("Correção: ", m)
-        return m, True
+        return m, True            
 
     else:
         return m, False
