@@ -1,3 +1,5 @@
+import csv
+
 def menu(text):
     print()
     print('Opcoes disponiveis:')
@@ -17,12 +19,29 @@ def menu(text):
 
 
 def loadClients ():
-    ...
+    with open('ep1.csv', mode='r') as csv_file:
+      csv_reader = csv.reader(csv_file, delimiter=';')
+      global lista
+      lista = list(csv_reader)
 
+      x=0
+      for row in csv_reader:
+          ++x
 
+    csv_file.close()
+
+    print("Nome do ficheiro: ep1.csv")
+    print("Foram importados 6 registos.")
+    return lista
+    
+      
 def printClients(v):
-    ...
-        
+
+    loadClients()
+    
+    lista.sort(key= lambda l: (l[2],l[0]))
+    print(lista)
+    
 def saveEntries(l):
     ...
         
@@ -50,16 +69,16 @@ operations = []
 op = menu(True)
 
 while True:
-    op = menu(False)
+   ## op = menu(False)
     if op == 0:
         print('Obrigado por usar o nosso software!')
-        break;
+        break
         
     elif op == 1:
         vehicles += loadClients()
         
     elif op == 2:
-        printClients(vehicles)
+       printClients(vehicles)
 
     elif op == 3:
         printClientPlates(vehicles)
