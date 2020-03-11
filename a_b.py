@@ -11,9 +11,6 @@ for linha in Ficheiro:
     contador +=1
 print("Contador: ",contador)
 
-
-
-
 #ordenar lista importada
 
 #ordenar = sorted(vehicle,key=lambda linha: linha[2])
