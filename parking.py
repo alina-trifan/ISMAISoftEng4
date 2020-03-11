@@ -32,8 +32,11 @@ def addParkEntry():
     
 
 def validPlate(s):
-	...
+	match = re.search(r"[0-9]{2}[-][a-zA-Z]{2}[-][0-9]{2}", string)  
+    	return False if match == None\
+        	else ()
 
+	
 def matches(s, pattern):
     ...
     
