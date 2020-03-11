@@ -38,7 +38,17 @@ def matches(s, pattern):
     
     
 def printClientPlates(c):
-    ...
+	clientes = []
+    for carro in vehicle:
+        if carro[2] not in clientes:
+            clientes.append(carro[2])
+    for cliente in clientes:
+        matriculas = []
+        for x in range(0, len(vehicle)):
+            if (cliente == vehicle[x][2] ):
+                matriculas.append(vehicle[x][0])        
+        print(cliente, ": ", matriculas, "") 
+
 
 
 def invoice(c, o):
