@@ -1,6 +1,3 @@
-import re
-import csv
-
 class Duracao:
 
     def validDuration():
@@ -15,6 +12,7 @@ class Duracao:
                     print("Valor negativo não é válido.")
                     continue
                 elif int_d > 0:
+                    d = int_d
                     exitFlag = 0
                     break
                 else:
@@ -27,5 +25,7 @@ class Duracao:
                 break            
             else:
                 exitFlag = 1 
-                break	
-        return int_d, True, exitFlag
+                break
+            break	
+        return d, True, exitFlag
+
