@@ -1,5 +1,9 @@
+import csv
+
 def saveEntries(l):
-    with open ('parque.csv', 'a+') as parque_csv:
-        writer_csv = csv.writer (parque_csv, delimiter=';')
-        for i in range(cont):
-            writer_csv.writerow('')
+    cont = len()
+    with open('parque.csv',newline='',delimiter=";") as file:
+        writer_csv = csv.writer(file)
+        for i in range(0, cont):
+            writer_csv.writerow()
+    return writer_csv
