@@ -4,7 +4,6 @@ def inicio():
     i = 0 #contador para a duração
     p = 0 # contador para a matricula
     matricula = ""
-    x = ""
     
     while p != 1:
         matricula = input("Introduza a matricula no formato 00-AA-00\n")
@@ -28,4 +27,3 @@ def verifica_matricula (string):
         else ()
 # inicio do programa
 inicio()
-
