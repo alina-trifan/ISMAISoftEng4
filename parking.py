@@ -37,7 +37,13 @@ def printClients(v):
     for row in lista:
         print(f'{row[2]} : ({row[0]}, {row[1]})')
 def saveEntries(l):
-    ...
+        totalOperacoes = len(operations)
+        with open('parque.csv','w',newline='',delimiter=";") as file:
+            file1 = csv.writer(file)
+            for i in range(0,quantidade):
+                ficheiro.writerow(operations[i])
+        print("Foram salvas ",totalOperacoes,"entradas.")
+        return file1
         
 def addParkEntry():
     registos = []
@@ -63,7 +69,17 @@ def matches(s, pattern):
     
     
 def printClientPlates(c):
-    ...
+    clientes=[]
+    for i in range(0,len(vehicles)):
+        clientes.append(vehicles[i][2])
+    clientes.sort()
+    clientes = list(dict.fromkeys(clientes))
+    for i in range(0,len(clientes)):
+        matriculas=[]
+        for l in range(0,len(vehicles)):
+            if(clientes[i]==vehicles[l][2]):
+                matriculas.append(vehicles[l][0])
+        print("nif:",clientes[i],"matriculas:",matriculas)
 
 
 def invoice(c, o):
