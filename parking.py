@@ -1,4 +1,101 @@
+<<<<<<< HEAD
+import csv
+import operator
+def menu(text):
+    print()
+    print('Opcoes disponiveis:')
+    if text:
+        print('0 - Terminar')
+        print('1 - Ler ficheiro de clientes')
+        print('2 - Imprimir clientes ordenados')
+        print('3 - Mostrar matriculas por Cliente')
+        print('4 - Adicionar acesso ao parque')
+        print('5 - Gravar acessos ao parque')
+        print('6 - Gerar fatura para um cliente')
+    else:
+        print('[Impressao das varias opcoes]')
+        
+    o = int(input('Opcao? '))
+    return o
 
+
+def loadClients ():
+    with open('ep1.csv') as csv_file:
+        reader = csv.reader(csv_file, delimiter=';')
+        vehicles = []
+        contador = 0
+        for row in reader:
+            contador += 1
+            vehicles.append(row)
+        print(f'Nome do ficheiro: ep1.csv')
+        print(f'Foram importados {contador} registos.')
+        return vehicles
+
+def printClients(v):
+    
+    lista = vehicles
+    lista.sort(key=operator.itemgetter(2))
+    for row in lista:
+        print(f'{row[2]} : ({row[0]}, {row[1]})')
+   
+def saveEntries(l):
+    ...
+        
+def addParkEntry():
+   ...
+    
+
+def validPlate(s):
+    from re import compile
+    
+    plate_format = compile('^[0-9]{2}[-][A-Z]{2}[-][0-9]{2}$')
+
+    for plate in vehicles:
+        if plate_format.match(plate) is not None:
+            return True
+        else:
+            return False
+
+def matches(s, pattern):
+    ...
+    
+    
+def printClientPlates(c):
+    ...
+
+
+def invoice(c, o):
+    ...
+
+###############################################################################
+vehicles = []
+operations = []
+op = menu(True)
+
+while True:
+    op = menu(False)
+    if op == 0:
+        print('Obrigado por usar o nosso software!')
+        break
+        
+    elif op == 1:
+        vehicles += loadClients()
+        
+    elif op == 2:
+        printClients(vehicles)
+
+    elif op == 3:
+        printClientPlates(vehicles)
+        
+    elif op == 4:
+        operations.append(addParkEntry())
+    
+    elif op == 5:
+        saveEntries(operations)
+        
+    elif op == 6:
+        invoice(vehicles, operations)
+=======
 import csv
 import operator
 def menu(text):
@@ -32,7 +129,6 @@ def loadClients():
         print(f'Foram importados {contador} registos.')
         return vehicles
 def printClients(v):
-    print("Não existe nehum registo")
     lista = vehicles
     lista.sort(key=operator.itemgetter(2))
     for row in lista:
@@ -86,3 +182,4 @@ while True:
     elif op == 6:
         invoice(vehicles, operations)
 
+>>>>>>> 7f3296f8681c1b83f6f5b5252e7b9ef74cd2f68b
