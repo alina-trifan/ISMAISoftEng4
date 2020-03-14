@@ -61,22 +61,24 @@ def loadClients ():
         return listaClienteVeiculo
 
 def removeVehicle(matricula):
-    index = 0
-    matricula = correctMatricula(matricula)
+    indexRemove = -1
+    matricula = correctMatricula(str(matricula))
     vehicleExist = False
     with open('ep1.csv') as csv_file:
-        pandaReader = pd.read_csv(csv_file, index_col = 0)
-        for row in pandaReader:
-            if (pandaReader.at[index, "0"] == matricula):
-                pandaReader.drop([index, "0"], inplace = True)
-                print("Veiculo removido.")
+        reader = csv.reader(csv_file, delimiter = ';')
+        for row in reader:
+            if (str(row[0]) == matricula):
+                print(indexRemove)
                 vehicleExist = True
                 break
-            index += 1
-        pandaReader.to_csv("ep1.csv", index=False, sep = ';')
+            indexRemove += 1
     if (vehicleExist == False):
-        return "Veiculo não encontrado."
-
+        print("Veiculo não encontrado.")
+    else:
+        with open('ep1.csv') as csv_file:
+            pandaReader = pd.read_csv(csv_file, sep = ";")
+            pandaReader.drop([indexRemove], inplace = True)
+            pandaReader.to_csv("ep1.csv", index=False, sep = ';')
 
 def printClients(l_listaVeiculosCliente):
     l_listaVeiculosCliente = sorted(l_listaVeiculosCliente, key=lambda cliente: cliente.getNif()).copy()
