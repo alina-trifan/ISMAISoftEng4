@@ -6,6 +6,7 @@ import pandas as pd
 from cliente import Cliente
 from veiculo import Veiculo
 from duracao import Duracao
+from function import *
 
 #Variavel para guardar entradas
 contadorEntradas = 0
@@ -22,6 +23,7 @@ def menu(text):
         print('4 - Adicionar acesso ao parque')
         print('5 - Gravar acessos ao parque')
         print('6 - Gerar fatura para um cliente')
+        print('7 - Remover Veiculo')
     else:
         print('[Impressao das varias opcoes]')
 
@@ -58,6 +60,24 @@ def loadClients ():
                         contadorEntradas += 1
         return listaClienteVeiculo
 
+def removeVehicle(matricula):
+    index = 0
+    matricula = correctMatricula(matricula)
+    vehicleExist = False
+    with open('ep1.csv') as csv_file:
+        pandaReader = pd.read_csv(csv_file, index_col = 0)
+        for row in pandaReader:
+            if (pandaReader.at[index, "0"] == matricula):
+                pandaReader.drop([index, "0"], inplace = True)
+                print("Veiculo removido.")
+                vehicleExist = True
+                break
+            index += 1
+        pandaReader.to_csv("ep1.csv", index=False, sep = ';')
+    if (vehicleExist == False):
+        return "Veiculo não encontrado."
+
+
 def printClients(l_listaVeiculosCliente):
     l_listaVeiculosCliente = sorted(l_listaVeiculosCliente, key=lambda cliente: cliente.getNif()).copy()
     for i in range(len(l_listaVeiculosCliente)):
@@ -72,36 +92,36 @@ def saveEntries(combine):
     with open ('parque.csv', mode='a', newline='') as parque_file:
         parque_writer = csv.writer(parque_file, delimiter=';')
         for x in range(0, len(combine)-1,2):
-            parque_writer.writerow([combine[x]]+[str(combine[x+1])])        
+            parque_writer.writerow([combine[x]]+[str(combine[x+1])])
     print(("Ficheiro gravado com sucesso"))
     df = pd.read_csv('parque.csv', sep=';')
     df.sort_values(by=['duracao'], ascending=False, inplace=True)
     df.to_csv('parque.csv', sep=';', index=False)
-    combine = []  
-
-def addParkEntry():
-    global combine 
     combine = []
 
-    while True:     
+def addParkEntry():
+    global combine
+    combine = []
+
+    while True:
         m1, plateFlag = validPlate()
         if (m1!='0' and m1 !=''):
-            while True:                
-                if plateFlag == True:                    
+            while True:
+                if plateFlag == True:
                     while True:
                         d1, durationFlag, exitFlag = Duracao.validDuration()
-                        if durationFlag == True:                        
+                        if durationFlag == True:
                             if exitFlag == 0:
                                 combine.append(m1)
                                 combine.append(d1)
                                 print("combinex", combine)
                                 m1, plateFlag = validPlate()
                         else:
-                            plateFlag = False                            
+                            plateFlag = False
                         break
                 elif (m1=='0' or m1 ==''):
                     print("Obrigada por usar nosso software.")
-                    break   
+                    break
                 else:
                     print("Valor inválido")
                     m1, plateFlag = validPlate()
@@ -109,14 +129,14 @@ def addParkEntry():
 
 
 def validPlate():
-	
+
     model8 = re.compile('^\d{2}[-][A-Z]{2}[-]\d{2}$')
     model6 = re.compile('^\d{2}[A-Z]{2}\d{2}$')
     m = input("Digite a matricula (0 ou Enter para sair): ")
-    m = m.upper();    
+    m = m.upper();
 
     if len(m) == 8 and model8.match(m):
-        print("Matricula: ", m) 
+        print("Matricula: ", m)
         return m, True
 
     elif len(m) == 6 and model6.match(m):
@@ -124,7 +144,7 @@ def validPlate():
         correcao = list(m)
         m = (correcao[0]+correcao[1]+"-"+correcao[2]+correcao[3]+"-"+correcao[4]+correcao[5]);
         print("Correção: ", m)
-        return m, True            
+        return m, True
 
     else:
         return m, False
@@ -147,23 +167,23 @@ def invoice(c, o):
 
     custo = 0
     total = 0
-    
+
     nif = int(input("Introduza o seu NIF: "))
 
     while nif < 0 or nif > 999999999:
         print("NIF inválido, introduza de novo!")
         nif = int(input("Introduza o seu NIF: "))
-        
+
     if 0 < nif <= 999999999:
         fatura.insert(0, nif)
 
     custo = (0.01 * Duracao)
-    
+
     fatura.insert(custo)
-    
+
 
     print(fatura)
-    
+
 
 ###############################################################################
 vehicles = []
@@ -195,3 +215,7 @@ while True:
 
     elif op == 6:
         invoice(vehicles, operations)
+
+    elif op == 7:
+        matricula = input('Insira Matricula? ')
+        removeVehicle(correctMatricula(matricula))

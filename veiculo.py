@@ -1,7 +1,9 @@
+import re
+
 class Veiculo:
 
     def __init__(self, matricula, marca="indefinida"):
-        self.__matricula = matricula
+        self.setMatricula(matricula)
         self.__marca = marca
 
     def getMatricula(self):
@@ -11,25 +13,24 @@ class Veiculo:
         return self.__marca
 
     def setMatricula(self, matricula):
-        if  validPlate(matricula) == False:
-            self.__matricula = None
-        elif len(matricula) == 6 and validPlateVehicle(matricula):
+        model8 = re.compile('^\d{2}[-][A-Z]{2}[-]\d{2}$')
+        model6 = re.compile('^\d{2}[A-Z]{2}\d{2}$')
+        matricula = matricula.upper();
+        if len(matricula) == 6 and model6.match(matricula):
             correcao = list(matricula)
             matricula = (correcao[0]+correcao[1]+"-"+correcao[2]+correcao[3]+"-"+correcao[4]+correcao[5]);
             self.__matricula = matricula
+        elif(len(matricula) == 8 and model8.match(matricula)):
+            self.__matricula = matricula
         else:
-            self.__matricula = str(matricula)
+            print("Matricula invalida.")
+            self.__matricula = None
 
     def setMarca(self, marca):
         if  isinstance(marca, str) == False:
             self.__marca= "indefinida"
         else:
             self.__marca = marca
-
-    def validPlateVehicle(matricula):
-        model8 = re.compile('^\d{2}[-][A-Z]{2}[-]\d{2}$')
-        model6 = re.compile('^\d{2}[A-Z]{2}\d{2}$')
-        matricula = matricula.upper();
 
         if len(matricula) == 8 and model8.match(m):
             return True
@@ -52,5 +53,5 @@ class Veiculo:
 
     def __eq__(self, other):
         if isinstance(other, Veiculo):
-            return self.matricula == other.matricula
+            return self.getMatricula() == other.getMatricula()
         return False
