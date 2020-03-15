@@ -172,12 +172,12 @@ def invoice(nif):
     fatura = Fatura(Cliente(nif))
     fatura.calcularValor()
     print("NIF: "+nif)
-    print("ID da Fatura: "+fatura.getId())
+    print("ID da Fatura: "+str(fatura.getId()))
     print("")
-    print("Matricula    Marca               Duracao     Custo")
+    print("Matricula  Marca               Duracao     Custo")
     for ocupa in fatura.getOcupa():
-        print(ocupa.getVeiculo().getMatricula()+"   "+ocupa.getVeiculo().getMarca()+"                 "+ocupa.getDuracao()+"        "+ocupa.getValor())
-    print("Total:                                        "+fatura.getValorTotal())
+        print(str(ocupa.getVeiculo().getMatricula())+"   "+str(ocupa.getVeiculo().getMarca())+"                 "+str(ocupa.getDuracao())+"          "+str(ocupa.getValor()))
+    print("Total:                                      "+str(fatura.getValorTotal()))
 
 
 def vehicleEntry():

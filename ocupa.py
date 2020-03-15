@@ -19,9 +19,9 @@ class Ocupa:
         if (validate == False):
             pass
         else:
-            if veiculo.getMatricula() ==None:
+            if veiculo.getMatricula() == None:
                 pass
-            elif vehicleValidation(veiculo) == False and veiculo.getMatricula():
+            elif vehicleValidation(veiculo) == False:
                 print("Veiculo não registado.")
                 nif = input("Adicionar NIF : ")
                 with open('ep1.csv', 'a+', newline='') as csv_file:
@@ -32,14 +32,20 @@ class Ocupa:
                 self.setSaida(saida)
                 with open('ocupacao.csv', 'a+', newline='') as csv_file:
                     ocupa_writer = csv.writer(csv_file, delimiter=';')
-                    ocupa_writer.writerow([veiculo.getMatricula(), veiculo.getMarca(), str(entrada), str(saida), "DurationNull", "ValueNull"])
-            else:
+                    ocupa_writer.writerow([veiculo.getMatricula(), veiculo.getMarca(), str(entrada), str(saida), "DurationNull1", "ValueNull"])
+            elif (isinstance(saida, datetime) == False):
                 self.setVeiculo(veiculo)
                 self.setEntrada(entrada)
                 self.setSaida(saida)
                 with open('ocupacao.csv', 'a+', newline='') as csv_file:
                     ocupa_writer = csv.writer(csv_file, delimiter=';')
                     ocupa_writer.writerow([veiculo.getMatricula(), veiculo.getMarca(), str(entrada), str(saida), "DurationNull", "ValueNull"])
+            else:
+                self.setVeiculo(veiculo)
+                self.setEntrada(entrada)
+                self.setSaida(saida)
+                self.setDuracao(duracao)
+                self.setValor(valor)
 
 
     def getVeiculo(self):
@@ -81,7 +87,7 @@ class Ocupa:
         self.__valor=l_valor
 
     def setDuracao(self,l_duracao):
-        self.__valor=l_duracao
+        self.__duracao=l_duracao
 
     def addValorDuracao(self):
         dateNow =  datetime.now()

@@ -3,6 +3,7 @@ import pandas as pd
 import csv
 from cliente import Cliente
 from veiculo import Veiculo
+from ocupa import Ocupa
 
 class Fatura():
 
@@ -29,7 +30,7 @@ class Fatura():
         Fatura.idCount += 1
 
     def setValorTotal(self,valorTotal):
-        if  isinstance(valorTotal, number) == False or valorTotal < 0:
+        if  isinstance(valorTotal, float) == False or valorTotal < 0:
             self.__valorTotal= 0
         else:
             self.__valorTotal= valorTotal
@@ -45,34 +46,32 @@ class Fatura():
 
     def calcularValor(self):
         valorTotal = 0
-        l_ocupacoes = self.adicionarOcupa()
+        l_ocupacoes = self.adicionarOcupa().copy()
         for ocupa in l_ocupacoes:
             valorTotal += ocupa.getValor()
         self.setValorTotal(valorTotal)
 
     def adicionarOcupa(self):
-        veiculosVerify = []
         ocupacoes = []
         dateNow =  datetime.now()
-        cont = 0
 
         with open('ep1.csv') as csv_file:
             readerEp = csv.reader(csv_file, delimiter = ';')
-            for row in readerEp:
-                if str(row[2]) == self.getCliente().getNif():
-                    veiculo = Veiculo(str(row[0]), str(row[1]))
-                    print(veiculo)
-                    veiculosVerify.append(veiculo)
-                    print(veiculosVerify)
-
-        with open('ocupacao.csv') as csv_file:
-            readerOcup = csv.reader(csv_file, delimiter = ';')
-            for index in readerOcup:
-                for i in range(len(veiculosVerify)):
-                    if cont > 0:
-                        dateVerify = datetime.strptime(index[3], '%m/%d/%y %H:%M:%S')
-                        if (str(index[0]) == veiculosVerify[i].getMatricula() and dateVerify.month == dateNow.month and dateVerify.year == dateNow.year and index[3] != "None"):
-                            ocupacoes.append(Ocupa(veiculosVerify[i]), datetime.strptime(index[2], '%m/%d/%y %H:%M:%S'), dateVerify, int(index[4]), float(index[5]))
-                    ++cont
-        print(ocupacoes)
+            for i in readerEp:
+                if str(i[2]) == self.getCliente().getNif():
+                    veiculo = Veiculo(str(i[0]), str(i[1]))
+                    #print(veiculo)
+                    with open('ocupacao.csv') as csv_file:
+                        readerOcup = csv.reader(csv_file, delimiter = ';')
+                        cont=0
+                        for row in readerOcup:
+                            #print(row[0])
+                            if (str(row[0]) == veiculo.getMatricula() and row[3] != "None"):
+                                dateVerify = datetime.strptime(row[3], "%Y-%m-%d %H:%M:%S.%f")
+                                if (dateVerify.month == dateNow.month and dateVerify.year == dateNow.year):
+                                    ocupaFinder = Ocupa(veiculo, datetime.strptime(row[2], "%Y-%m-%d %H:%M:%S.%f"), dateVerify, int(row[4]), float(row[5]))
+                                    #print(ocupaFinder)
+                                    ocupacoes.insert(cont, ocupaFinder)
+                            ++cont
         self.setOcupa(ocupacoes)
+        return ocupacoes
