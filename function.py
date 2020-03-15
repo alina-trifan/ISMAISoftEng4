@@ -1,6 +1,7 @@
 import re
 from datetime import datetime
 import pandas as pd
+import csv
 
 def correctMatricula(matricula):
     model8 = re.compile('^\d{2}[-][A-Z]{2}[-]\d{2}$')
@@ -26,7 +27,7 @@ def registerSaida(matricula):
             if (pandaReader.at[index, "3"] == "None" and pandaReader.at[index, "0"] == matricula):
                 pandaReader.iat[index, 3] = str(datetime.now())
                 pandaReader.iat[index, 4] = str(int(calcDurationMinutes(pandaReader.at[index, "2"], datetime.now())))
-                pandaReader.iat[index, 5] = str(int(calcDurationMinutes(pandaReader.at[index, "2"], datetime.now())) * 0.1)
+                pandaReader.iat[index, 5] = str(round(calcDurationMinutes(pandaReader.at[index, "2"], datetime.now()) * 0.1, 2))
                 vehiclePark = True
                 break
             index += 1

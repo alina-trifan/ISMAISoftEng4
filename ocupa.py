@@ -6,7 +6,7 @@ from function import *
 
 class Ocupa:
 
-    def __init__(self, veiculo, entrada = datetime.now(), saida= None):
+    def __init__(self, veiculo, entrada = datetime.now(), saida= None, duracao = 0, valor = 0):
         validate = True
         with open('ocupacao.csv') as csv_file:
             reader = csv.reader(csv_file, delimiter = ';')
@@ -20,7 +20,7 @@ class Ocupa:
         else:
             if veiculo.getMatricula() ==None:
                 pass
-            elif self.vehicleValidation(veiculo) == False and veiculo.getMatricula():
+            elif vehicleValidation(veiculo) == False and veiculo.getMatricula():
                 print("Veiculo não registado.")
                 nif = input("Adicionar NIF : ")
                 with open('ep1.csv', 'a+', newline='') as csv_file:
@@ -53,6 +53,9 @@ class Ocupa:
     def getDuracao(self):
         return self.__duracao
 
+    def getValor(self):
+        return self.__valor
+
     def setVeiculo(self,l_veiculo):
         if  isinstance(l_veiculo, Veiculo) == False or vehicleValidation(l_veiculo) == False:
             pass
@@ -61,15 +64,31 @@ class Ocupa:
 
     def setEntrada(self,l_entrada):
         if  isinstance(l_entrada, datetime) == False or l_entrada > datetime.now():
-            self.__entrada=datetime.now()
+            pass
         else:
-            self.__entrada=l_entrada
+            datetimeFormat = '%Y-%m-%d %H:%M:%S.%f'
+            self.__entrada=datetime.strptime(str(l_entrada), datetimeFormat)
 
     def setSaida(self,l_saida):
         if  isinstance(l_saida, datetime) == False or l_saida > datetime.now():
             self.__saida= None
         else:
-            self.__saida=l_saida
+            datetimeFormat = '%Y-%m-%d %H:%M:%S.%f'
+            self.__saida=datetime.strptime(str(l_saida), datetimeFormat)
+
+    def setValor(self,l_valor):
+        self.__valor=l_valor
+
+    def setDuracao(self,l_duracao):
+        self.__valor=l_duracao
+
+    def addValorDuracao(self):
+        dateNow =  datetime.now()
+        duracao = int(calcDurationMinutes(self.getEntrada(), dateNow))
+        valor = duracao * 0.1
+        registerSaida(self.getVeiculo().getMatricula())
+        self.setDuracao(int(duracao))
+        self.setValor(round(valor, 2))
 
     def __repr__(self):
         return {'Veiculo':self.getVeiculo(), 'Entrada': self.getEntrada().strftime("%m/%d/%Y, %H:%M:%S")}
@@ -83,4 +102,7 @@ class Ocupa:
                 return True
         return False
 
-registerSaida("00aa00")
+o1 = Ocupa(Veiculo("00-aa-00", "Seat"))
+o2 = Ocupa(Veiculo("50-UA-50", "Honda"))
+o1.addValorDuracao()
+o2.addValorDuracao()

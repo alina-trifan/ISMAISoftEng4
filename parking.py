@@ -37,7 +37,7 @@ def loadClients ():
     with open('ep1.csv') as csv_file:
         reader = csv.reader(csv_file, delimiter = ';')
         for row in reader:
-            if int(row[2]) < 0 or len(str(row[2])) < 9 or str(row[2]).isnumeric() == False:
+            if len(str(row[2])) < 9 or str(row[2]).isnumeric() == False:
                 pass
             else:
                 l_cliente = Cliente(row[2])

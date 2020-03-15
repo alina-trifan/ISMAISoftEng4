@@ -1,11 +1,18 @@
 from veiculo import Veiculo
 from operator import itemgetter
+import csv
 
 class Cliente:
 
-    def __init__(self, nif, automoveis=[]):
+    def __init__(self, nif):
         self.setNif(nif)
-        self.setAutomoveis(automoveis)
+        automoveis = []
+        with open('ep1.csv') as csv_file:
+            reader = csv.reader(csv_file, delimiter = ';')
+            for row in reader:
+                if(row[2] == nif):
+                    automoveis.append(Veiculo(str(row[0]),str(row[1])))
+            self.setAutomoveis(automoveis)
 
     def getNif(self):
         return str(self.__nif)
