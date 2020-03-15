@@ -4,6 +4,7 @@ from datetime import datetime
 import pandas as pd
 from function import *
 
+
 class Ocupa:
 
     def __init__(self, veiculo, entrada = datetime.now(), saida= None, duracao = 0, valor = 0):
@@ -85,7 +86,7 @@ class Ocupa:
     def addValorDuracao(self):
         dateNow =  datetime.now()
         duracao = int(calcDurationMinutes(self.getEntrada(), dateNow))
-        valor = duracao * 0.1
+        valor = duracao * 0.01
         registerSaida(self.getVeiculo().getMatricula())
         self.setDuracao(int(duracao))
         self.setValor(round(valor, 2))
@@ -101,8 +102,3 @@ class Ocupa:
             if(self.getEntrada() == other.getEntrada() and self.getVeiculo() == other.getVeiculo()):
                 return True
         return False
-
-o1 = Ocupa(Veiculo("00-aa-00", "Seat"))
-o2 = Ocupa(Veiculo("50-UA-50", "Honda"))
-o1.addValorDuracao()
-o2.addValorDuracao()

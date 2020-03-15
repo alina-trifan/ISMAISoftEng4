@@ -7,6 +7,8 @@ from cliente import Cliente
 from veiculo import Veiculo
 from duracao import Duracao
 from function import *
+from ocupa import Ocupa
+from fatura import Fatura
 
 #Variavel para guardar entradas
 contadorEntradas = 0
@@ -24,6 +26,8 @@ def menu(text):
         print('5 - Gravar acessos ao parque')
         print('6 - Gerar fatura para um cliente')
         print('7 - Remover Veiculo')
+        print('8 - Registar entrada de Veiculo')
+        print('9 - Registar saida de Veiculo')
     else:
         print('[Impressao das varias opcoes]')
 
@@ -164,32 +168,28 @@ def printClientPlates(l_listaVeiculosCliente):
             print('     '+str(l_listaVeiculosCliente[i].getVeiculoIndex(index).getMatricula()))
 
 
-def invoice(c, o):
-    fatura = []
-
-    custo = 0
-    total = 0
-
-    nif = int(input("Introduza o seu NIF: "))
-
-    while nif < 0 or nif > 999999999:
-        print("NIF inválido, introduza de novo!")
-        nif = int(input("Introduza o seu NIF: "))
-
-    if 0 < nif <= 999999999:
-        fatura.insert(0, nif)
-
-    custo = (0.01 * Duracao)
-
-    fatura.insert(custo)
+def invoice(nif):
+    fatura = Fatura(Cliente(nif))
+    fatura.calcularValor()
+    print("NIF: "+nif)
+    print("ID da Fatura: "+fatura.getId())
+    print("")
+    print("Matricula    Marca               Duracao     Custo")
+    for ocupa in fatura.getOcupa():
+        print(ocupa.getVeiculo().getMatricula()+"   "+ocupa.getVeiculo().getMarca()+"                 "+ocupa.getDuracao()+"        "+ocupa.getValor())
+    print("Total:                                        "+fatura.getValorTotal())
 
 
-    print(fatura)
-
-
+def vehicleEntry():
+    matricula = input("Introduza Matricula: ")
+    marca = input("Introduza Marca: ")
+    ocupa = Ocupa(Veiculo(matricula, marca))
+    print("Veiculo de matricula "+ ocupa.getVeiculo().getMatricula()+" deu entrada ao parque.")
+    ocupacoes
 ###############################################################################
 vehicles = []
 operations = []
+ocupacoes= []
 op = menu(True)
 
 while True:
@@ -216,8 +216,16 @@ while True:
         saveEntries(operations)
 
     elif op == 6:
-        invoice(vehicles, operations)
+        nif = input("Introduza o seu NIF: ")
+        invoice(nif)
 
     elif op == 7:
-        matricula = input('Insira Matricula? ')
-        removeVehicle(correctMatricula(matricula))
+        matricula = input('Insira Matricula; ')
+        removeVehicle(matricula)
+
+    elif op == 8:
+        vehicleEntry()
+
+    elif op == 9:
+        matricula = input('Insira Matricula: ')
+        registerSaida(matricula)

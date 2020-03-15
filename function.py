@@ -18,22 +18,27 @@ def correctMatricula(matricula):
         return None
 
 def registerSaida(matricula):
-    index = 0
-    vehiclePark = False
-    matricula = correctMatricula(matricula)
+    index = -1
+    matricula = correctMatricula(str(matricula))
+    vehicleExist = False
     with open('ocupacao.csv') as csv_file:
-        pandaReader = pd.read_csv(csv_file, sep = ';')
-        for row in pandaReader:
-            if (pandaReader.at[index, "3"] == "None" and pandaReader.at[index, "0"] == matricula):
-                pandaReader.iat[index, 3] = str(datetime.now())
-                pandaReader.iat[index, 4] = str(int(calcDurationMinutes(pandaReader.at[index, "2"], datetime.now())))
-                pandaReader.iat[index, 5] = str(round(calcDurationMinutes(pandaReader.at[index, "2"], datetime.now()) * 0.1, 2))
-                vehiclePark = True
+        reader = csv.reader(csv_file, delimiter = ';')
+        for row in reader:
+            if (row[0] == str(matricula) and str(row[3]) == "None"):
+                vehicleExist = True
                 break
             index += 1
-        pandaReader.to_csv("ocupacao.csv", index=False, sep = ';')
-    if (vehiclePark == False):
+    if (vehicleExist == False):
+        print("Mat: "+matricula)
         print("Veiculo não encontrado.")
+    else:
+        with open('ocupacao.csv') as csv_file:
+            now = datetime.now()
+            pandaReader = pd.read_csv(csv_file, sep = ';')
+            pandaReader.iat[index, 3] = now.strftime("%Y-%m-%d %H:%M:%S.%f")
+            pandaReader.iat[index, 4] = str(int(calcDurationMinutes(pandaReader.at[index, "2"], datetime.now())))
+            pandaReader.iat[index, 5] = str(round(calcDurationMinutes(pandaReader.at[index, "2"], datetime.now()) * 0.01, 2))
+            pandaReader.to_csv("ocupacao.csv", index=False, sep = ';')
 
 def calcDurationMinutes(entrada, saida):
     datetimeFormat = '%Y-%m-%d %H:%M:%S.%f'
