@@ -94,40 +94,51 @@ def printClients(l_listaVeiculosCliente):
 
 def saveEntries(combine):
 
-    print("combine", combine)
+
+    #Gravar informações da lista combine no ficheiro parque.csv
     with open ('parque.csv', mode='a', newline='') as parque_file:
         parque_writer = csv.writer(parque_file, delimiter=';')
         for x in range(0, len(combine)-1,2):
             parque_writer.writerow([combine[x]]+[str(combine[x+1])])
+    #Informar que a gravação foi realizada com sucesso
     print(("Ficheiro gravado com sucesso"))
+    #Ordenar o dados de forma descrescente em relação a duração do estacionamento
     df = pd.read_csv('parque.csv', sep=';')
     df.sort_values(by=['duracao'], ascending=False, inplace=True)
     df.to_csv('parque.csv', sep=';', index=False)
-    combine = []
+    combine = [] 
 
 def addParkEntry():
+    
+    #Variável global combine. Irá conter os dados de matricula e duração. 
     global combine
     combine = []
 
+    #Validação da matricula e duracao
     while True:
+        #Função para validação da matricula (validPlate())
         m1, plateFlag = validPlate()
         if (m1!='0' and m1 !=''):
             while True:
                 if plateFlag == True:
                     while True:
+                        #Função para validação da duracao (validDuration())
                         d1, durationFlag, exitFlag = Duracao.validDuration()
                         if durationFlag == True:
                             if exitFlag == 0:
+                                #Inserir dados na variável combine
                                 combine.append(m1)
                                 combine.append(d1)
-                                print("combinex", combine)
+                                #Chamar função da matricula novamente para continuar a inserir.                                 
                                 m1, plateFlag = validPlate()
                         else:
                             plateFlag = False
                         break
+                #Ao inserir 0 ou Enter o sistema para e impede a gravação. 
                 elif (m1=='0' or m1 ==''):
                     print("Obrigada por usar nosso software.")
                     break
+                #Ao inserir valores inválidos o sistema avisa e impede gravação. 
                 else:
                     print("Valor inválido")
                     m1, plateFlag = validPlate()
@@ -136,15 +147,19 @@ def addParkEntry():
 
 def validPlate():
 
+    #Modelo para validação da placa. Ex.: 11-XX-22
     model8 = re.compile('^\d{2}[-][A-Z]{2}[-]\d{2}$')
+    #Modelo para validação da placa e posterior correção. Ex.: 11XX22
     model6 = re.compile('^\d{2}[A-Z]{2}\d{2}$')
     m = input("Digite a matricula (0 ou Enter para sair): ")
     m = m.upper();
 
+    #Matricula no modelo válido final ("11-XX-22")
     if len(m) == 8 and model8.match(m):
         print("Matricula: ", m)
         return m, True
 
+    #Matricula no modelo válido para correção ("11XX22")
     elif len(m) == 6 and model6.match(m):
         print("Valor necessita correção")
         correcao = list(m)
@@ -152,6 +167,7 @@ def validPlate():
         print("Correção: ", m)
         return m, True
 
+    #Matricula inválida. 
     else:
         return m, False
 
