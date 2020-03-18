@@ -5,9 +5,9 @@ import pandas as pd
 from function import *
 
 
-class Ocupa:
+class Ocupa: #classe que determina o objeto da abstração de uma ocupação de vaga
 
-    def __init__(self, veiculo, entrada = datetime.now(), saida= None, duracao = 0, valor = 0):
+    def __init__(self, veiculo, entrada = datetime.now(), saida= None, duracao = 0, valor = 0): #construtor
         validate = True
         with open('ocupacao.csv') as csv_file:
             reader = csv.reader(csv_file, delimiter = ';')
@@ -16,10 +16,10 @@ class Ocupa:
                     print("Veiculo já se encontra dentro do estacionamento.")
                     validate = False
                     break
-        if (validate == False):
+        if (validate == False): #verificação se vaiculo ja se encontra no parque
             pass
         else:
-            if veiculo.getMatricula() == None:
+            if veiculo.getMatricula() == None: #verificação de existencia de matricula do veiculo
                 pass
             elif vehicleValidation(veiculo) == False:
                 print("Veiculo não registado.")
@@ -48,48 +48,48 @@ class Ocupa:
                 self.setValor(valor)
 
 
-    def getVeiculo(self):
+    def getVeiculo(self): #encapsulamento
         return self.__veiculo
 
-    def getEntrada(self):
+    def getEntrada(self): #encapsulamento
         return self.__entrada
 
-    def getSaida(self):
+    def getSaida(self): #encapsulamento
         return self.__saida
 
-    def getDuracao(self):
+    def getDuracao(self): #encapsulamento
         return self.__duracao
 
-    def getValor(self):
+    def getValor(self): #encapsulamento
         return self.__valor
 
-    def setVeiculo(self,l_veiculo):
+    def setVeiculo(self,l_veiculo): #encapsulamento
         if  isinstance(l_veiculo, Veiculo) == False or vehicleValidation(l_veiculo) == False:
             pass
         else:
             self.__veiculo = l_veiculo
 
-    def setEntrada(self,l_entrada):
+    def setEntrada(self,l_entrada): #encapsulamento
         if  isinstance(l_entrada, datetime) == False or l_entrada > datetime.now():
             pass
         else:
             datetimeFormat = '%Y-%m-%d %H:%M:%S.%f'
             self.__entrada=datetime.strptime(str(l_entrada), datetimeFormat)
 
-    def setSaida(self,l_saida):
+    def setSaida(self,l_saida): #encapsulamento
         if  isinstance(l_saida, datetime) == False or l_saida > datetime.now():
             self.__saida= None
         else:
             datetimeFormat = '%Y-%m-%d %H:%M:%S.%f'
             self.__saida=datetime.strptime(str(l_saida), datetimeFormat)
 
-    def setValor(self,l_valor):
+    def setValor(self,l_valor): #encapsulamento
         self.__valor=l_valor
 
-    def setDuracao(self,l_duracao):
+    def setDuracao(self,l_duracao): #encapsulamento
         self.__duracao=l_duracao
 
-    def addValorDuracao(self):
+    def addValorDuracao(self): #adicona valor e duração de uma ocupação do parque
         dateNow =  datetime.now()
         duracao = int(calcDurationMinutes(self.getEntrada(), dateNow))
         valor = duracao * 0.01
@@ -97,14 +97,19 @@ class Ocupa:
         self.setDuracao(int(duracao))
         self.setValor(round(valor, 2))
 
-    def __repr__(self):
+    def __repr__(self): #função de representação de um objeto, caso o tostring não resulte
         return {'Veiculo':self.getVeiculo(), 'Entrada': self.getEntrada().strftime("%m/%d/%Y, %H:%M:%S")}
 
-    def __str__(self):
+    def __str__(self):#função to String, imprimi o objeto em forma de string
         return str(self.getVeiculo())+' Entrada = '+self.getEntrada().strftime("%m/%d/%Y, %H:%M:%S")
 
-    def __eq__(self, other):
+    def __eq__(self, other):#função para determinar se instancias de objetos são iguais
         if isinstance(other, Ocupa):
             if(self.getEntrada() == other.getEntrada() and self.getVeiculo() == other.getVeiculo()):
                 return True
         return False
+
+    def copy(self): #função para copiar um cliente
+        newcopy = self
+        return newcopy
+        __copy__ = copy

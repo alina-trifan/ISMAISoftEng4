@@ -19,22 +19,21 @@ def menu(text):
     print('Opcoes disponiveis:')
     if text:
         print('0 - Terminar')
-        print('1 - Ler ficheiro de clientes')
-        print('2 - Imprimir clientes ordenados')
-        print('3 - Mostrar matriculas por Cliente')
+        print('1 - Registar entrada de Veiculo')
+        print('2 - Registar saida de Veiculo')
+        print('3 - Imprimir clientes ordenados')
         print('4 - Adicionar acesso ao parque')
         print('5 - Gravar acessos ao parque')
         print('6 - Gerar fatura para um cliente')
         print('7 - Remover Veiculo')
-        print('8 - Registar entrada de Veiculo')
-        print('9 - Registar saida de Veiculo')
+
     else:
         print('[Impressao das varias opcoes]')
 
     o = int(input('Opcao? '))
     return o
 
-def loadClients ():
+def loadClients (): #metodo para buscar cliente ao arquivo ep1.csv
     global contadorEntradas
     contadorEntradas = 0
     listaClienteVeiculo = []
@@ -64,7 +63,7 @@ def loadClients ():
                         contadorEntradas += 1
         return listaClienteVeiculo
 
-def removeVehicle(matricula):
+def removeVehicle(matricula): #metodo para remover do arquivo ep1.csv um determinado veiculo
     indexRemove = -1
     matricula = correctMatricula(str(matricula))
     vehicleExist = False
@@ -84,7 +83,7 @@ def removeVehicle(matricula):
             pandaReader.drop([indexRemove], inplace = True)
             pandaReader.to_csv("ep1.csv", index=False, sep = ';')
 
-def printClients(l_listaVeiculosCliente):
+def printClients(l_listaVeiculosCliente): #metodo para imprimir cliente e matriculas de forma ordenada
     l_listaVeiculosCliente = sorted(l_listaVeiculosCliente, key=lambda cliente: cliente.getNif()).copy()
     for i in range(len(l_listaVeiculosCliente)):
         print('\n'+str(l_listaVeiculosCliente[i])+'\n')
@@ -106,11 +105,11 @@ def saveEntries(combine):
     df = pd.read_csv('parque.csv', sep=';')
     df.sort_values(by=['duracao'], ascending=False, inplace=True)
     df.to_csv('parque.csv', sep=';', index=False)
-    combine = [] 
+    combine = []
 
 def addParkEntry():
-    
-    #Variável global combine. Irá conter os dados de matricula e duração. 
+
+    #Variável global combine. Irá conter os dados de matricula e duração.
     global combine
     combine = []
 
@@ -129,16 +128,16 @@ def addParkEntry():
                                 #Inserir dados na variável combine
                                 combine.append(m1)
                                 combine.append(d1)
-                                #Chamar função da matricula novamente para continuar a inserir.                                 
+                                #Chamar função da matricula novamente para continuar a inserir.
                                 m1, plateFlag = validPlate()
                         else:
                             plateFlag = False
                         break
-                #Ao inserir 0 ou Enter o sistema para e impede a gravação. 
+                #Ao inserir 0 ou Enter o sistema para e impede a gravação.
                 elif (m1=='0' or m1 ==''):
                     print("Obrigada por usar nosso software.")
                     break
-                #Ao inserir valores inválidos o sistema avisa e impede gravação. 
+                #Ao inserir valores inválidos o sistema avisa e impede gravação.
                 else:
                     print("Valor inválido")
                     m1, plateFlag = validPlate()
@@ -167,7 +166,7 @@ def validPlate():
         print("Correção: ", m)
         return m, True
 
-    #Matricula inválida. 
+    #Matricula inválida.
     else:
         return m, False
 
@@ -175,7 +174,7 @@ def matches(s, pattern):
     ...
 
 
-def printClientPlates(l_listaVeiculosCliente):
+def printClientPlates(l_listaVeiculosCliente): #metodo para imprimir somente as matriculas de forma ordenada, NÃO IMPLEMENTADO ja que o metodo de impressao dos clientes ja responde a esta necessidade
     l_listaVeiculosCliente = sorted(l_listaVeiculosCliente, key=lambda cliente: cliente.getNif()).copy()
     for i in range(len(l_listaVeiculosCliente)):
         print('\n'+str(l_listaVeiculosCliente[i])+'\n')
@@ -184,11 +183,10 @@ def printClientPlates(l_listaVeiculosCliente):
             print('     '+str(l_listaVeiculosCliente[i].getVeiculoIndex(index).getMatricula()))
 
 
-def invoice(nif):
+def invoice(nif): #metodo para impressão de faturas do mes de um determinado cliente
     fatura = Fatura(Cliente(nif))
     fatura.calcularValor()
     print("NIF: "+nif)
-    print("ID da Fatura: "+str(fatura.getId()))
     print("")
     print("Matricula  Marca               Duracao     Custo")
     for ocupa in fatura.getOcupa():
@@ -196,7 +194,7 @@ def invoice(nif):
     print("Total:                                      "+str(fatura.getValorTotal()))
 
 
-def vehicleEntry():
+def vehicleEntry(): # metodo para registar entrada de um determinado veiculo ao parque
     matricula = input("Introduza Matricula: ")
     marca = input("Introduza Marca: ")
     ocupa = Ocupa(Veiculo(matricula, marca))
@@ -208,6 +206,8 @@ operations = []
 ocupacoes= []
 op = menu(True)
 
+vehicles += loadClients()
+
 while True:
     op = menu(False)
     if op == 0:
@@ -215,15 +215,14 @@ while True:
         break;
 
     elif op == 1:
-        vehicles += loadClients()
-        print('Nome do ficheiro: ep1.csv')
-        print('Foram importados ' +str(contadorEntradas)+ ' registos.')
+        vehicleEntry()
 
     elif op == 2:
-        printClients(vehicles)
+        matricula = input('Insira Matricula: ')
+        registerSaida(matricula)
 
     elif op == 3:
-        printClientPlates(vehicles)
+        printClients(vehicles)
 
     elif op == 4:
         operations.append(addParkEntry())
@@ -238,10 +237,3 @@ while True:
     elif op == 7:
         matricula = input('Insira Matricula; ')
         removeVehicle(matricula)
-
-    elif op == 8:
-        vehicleEntry()
-
-    elif op == 9:
-        matricula = input('Insira Matricula: ')
-        registerSaida(matricula)

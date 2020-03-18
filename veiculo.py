@@ -1,18 +1,18 @@
 import re
 
-class Veiculo:
+class Veiculo: #classe que representa a abstração de veiculo
 
-    def __init__(self, matricula, marca="indefinida"):
+    def __init__(self, matricula, marca="indefinida"): #construtor
         self.setMatricula(matricula)
         self.__marca = marca
 
-    def getMatricula(self):
+    def getMatricula(self): #encapsulamento
         return self.__matricula
 
-    def getMarca(self):
+    def getMarca(self): #encapsulamento
         return self.__marca
 
-    def setMatricula(self, matricula):
+    def setMatricula(self, matricula): #encapsulamento
         model8 = re.compile('^\d{2}[-][A-Z]{2}[-]\d{2}$')
         model6 = re.compile('^\d{2}[A-Z]{2}\d{2}$')
         matricula = matricula.upper();
@@ -26,7 +26,7 @@ class Veiculo:
             print("Matricula invalida.")
             self.__matricula = None
 
-    def setMarca(self, marca):
+    def setMarca(self, marca): #encapsulamento
         if  isinstance(marca, str) == False:
             self.__marca= "indefinida"
         else:
@@ -40,18 +40,18 @@ class Veiculo:
         else:
             return False
 
-    def __repr__(self):
+    def __repr__(self): #função de representação de um objeto, caso o tostring não resulte
         return {'Matricula':self.getMatricula(), 'Marca':self.getMarca()}
 
-    def __str__(self):
+    def __str__(self): #função to String, imprimi o objeto em forma de string
         return str(self.getMatricula())+'   '+str(self.getMarca())
 
-    def copy(self):
+    def copy(self): #função para copiar um objeto desta classe
         newcopy = self
         return newcopy
         __copy__ = copy
 
-    def __eq__(self, other):
+    def __eq__(self, other): #função para determinar se instancias de objetos são iguais
         if isinstance(other, Veiculo):
             return self.getMatricula() == other.getMatricula()
         return False
