@@ -36,12 +36,8 @@ class Cliente: #classe referente ao cliente
 
 
     def adicionarVeiculo(self,matricula, marca): #função para adicionar um objeto do tipo veiculo ao atributo de lista do cliente
-        v1 = Veiculo(matricula, marca)
-        if self.verificarVeiculo(v1):
-            self.__automoveis.append(Veiculo(matricula, marca))
-            self.ordenarVeiculos()
-        else:
-            pass
+        self.__automoveis.append(Veiculo(matricula, marca))
+        self.ordenarVeiculos()
 
     def removerVeiculo(self, l_veiculo): #função para remvover um objeto do tipo veiculo ao atributo de lista do cliente
         self.__automoveis.remove(l_veiculo)
@@ -56,6 +52,9 @@ class Cliente: #classe referente ao cliente
             else:
                 break
         return False
+
+    def getVeiculoIndex(self, l_index): #metodo para retornar index de um vewiculo na lista de automoveis
+        return self.__automoveis[l_index]
 
     def ordenarVeiculos(self): #função para ordenar veiculos de forma crescente
         self.__automoveis = sorted(self.__automoveis, key=lambda veiculo: veiculo.getMatricula()).copy()
