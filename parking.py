@@ -216,6 +216,7 @@ while True:
 
     elif op == 1:
         vehicleEntry()
+        vehicles += loadClients()
 
     elif op == 2:
         matricula = input('Insira Matricula: ')
@@ -237,3 +238,4 @@ while True:
     elif op == 7:
         matricula = input('Insira Matricula; ')
         removeVehicle(matricula)
+        vehicles += loadClients()
