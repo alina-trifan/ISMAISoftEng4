@@ -24,9 +24,12 @@ def importarD():
     openFile = open(file)
     reader = csv.reader(openFile, delimiter=';')
     for col in reader:
+        if col != []:
+            parque.append(col)
         
-        parque.append(col)
-    return parque
+    if parque:
+        return parque
+        
 
 def gerarFatura(nif,lista,parque,i):
     while True:
@@ -39,15 +42,20 @@ def gerarFatura(nif,lista,parque,i):
     print("NIF: ",nif)
     print("Fatura NIF:", nif)
     print("Matricula \t  Marca  \t Duração Custo")
-    for linha in lista:
-        for valor in linha:
-            if valor == nif:
-                for col in parque:
-                    if linha[0] == col[0]:
-                        custo = int(col[1]) * 0.01
+    if parque == None:
+        print("Ficheiro vazio")
+        i = False
+    else:
+        for linha in lista:
+            for valor in linha:
+                if valor == nif:
+                    print(parque)                
+                    for col in parque:
+                        if linha[0] == col[0]:
+                            custo = int(col[1]) * 0.01
                         
-                        print(linha[0],"\t ",linha[1]," \t ",col[1],"\t ",custo)
-                        i = False
+                            print(linha[0],"\t ",linha[1]," \t ",col[1],"\t ",custo)
+                            i = False
     if i== True:
         print("Não existe")
         
