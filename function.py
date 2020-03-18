@@ -3,7 +3,7 @@ from datetime import datetime
 import pandas as pd
 import csv
 
-def correctMatricula(matricula):
+def correctMatricula(matricula): #metodo de correção de matricula
     model8 = re.compile('^\d{2}[-][A-Z]{2}[-]\d{2}$')
     model6 = re.compile('^\d{2}[A-Z]{2}\d{2}$')
     matricula = matricula.upper();
@@ -17,7 +17,7 @@ def correctMatricula(matricula):
         print("Matricula invalida.")
         return None
 
-def registerSaida(matricula):
+def registerSaida(matricula): #metodo para registar saida de veiculo do parque
     index = -1
     matricula = correctMatricula(str(matricula))
     vehicleExist = False
@@ -40,12 +40,12 @@ def registerSaida(matricula):
             pandaReader.iat[index, 5] = str(round(calcDurationMinutes(pandaReader.at[index, "2"], datetime.now()) * 0.01, 2))
             pandaReader.to_csv("ocupacao.csv", index=False, sep = ';')
 
-def calcDurationMinutes(entrada, saida):
+def calcDurationMinutes(entrada, saida): #metodo para calucular duração de tempo em minutos
     datetimeFormat = '%Y-%m-%d %H:%M:%S.%f'
     diff = datetime.strptime(str(saida), datetimeFormat) - datetime.strptime(str(entrada), datetimeFormat)
     return diff.seconds / 60
 
-def vehicleValidation(l_veiculo):
+def vehicleValidation(l_veiculo): #metodo para verificar se veiculo ja existe no arquivo ep1.csv
     with open('ep1.csv') as csv_file:
         reader = csv.reader(csv_file, delimiter = ';')
         for row in reader:
