@@ -92,7 +92,7 @@ class Ocupa: #classe que determina o objeto da abstração de uma ocupação de 
     def addValorDuracao(self): #adicona valor e duração de uma ocupação do parque
         dateNow =  datetime.now()
         duracao = int(calcDurationMinutes(self.getEntrada(), dateNow))
-        valor = duracao * 0.01
+        valor = (duracao * 0.01) -0.01
         registerSaida(self.getVeiculo().getMatricula())
         self.setDuracao(int(duracao))
         self.setValor(round(valor, 2))
