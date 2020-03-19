@@ -1,29 +1,26 @@
 import re
 from a_b import vehicle
 
-# função que imprime se a matrícula é válida 
+# função que permite verificar se a matrícula é válida
 def inicio():
     t = 0  # contador 
     matricula = ""
     
     while t != 1:
-        matricula = input("Introduza a matrícula: \n")
+        matricula = input("Introduza a matrícula no formato 00-XX-00: \n")
 
-        if validplates(matricula) == False:
-            print("Matrícula fornecida [" + matricula + "] : Falso") # ou return falso
-            t += 1
+        if verifica_matricula(matricula) == False:
+            print("Matrícula fornecida [" + matricula + "] : Invalida") # ou return falso
+        
         else:
             print("Matrícula fornecida [" + matricula + "] : Verdadeiro")
             t += 1
 
-# função que verifica se a matrícula é válida
-def validplates (string):  
-    match = re.search(r"[0-9]{2}[-][a-zA-Z]{2}[-][0-9]{2}", string)  
-    return False if match == None\
-        else ()
+def verifica_matricula (string):  
+    match = bool(re.search(r'\d{2}-[a-zA-Z]{2}-\d{2}', string))
+    return match
 
 # início do programa
 inicio()
-
 
 
