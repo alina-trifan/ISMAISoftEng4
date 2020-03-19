@@ -68,10 +68,8 @@ def addParkEntry():
 # d.	Escreva uma função que valide se uma string, passada como argumento, representa uma matrícula válida em Portugal. Considere apenas matrículas 
 # posteriores a 2005 compostas por letras no meio como no seguinte exemplo: 00-AA-00. A função deverá devolver um valor lógico Verdadeiro se a matrícula for válida e Falso, caso contrário.
 def validPlate(matricula):
-    if re.findall("^(\d{2}-[A-Z]{2}-\d{2})$", matricula):
-        return True
-    else:
-        return False
+    return re.findall("^(\d{2}-[A-Z]{2}-\d{2})$", matricula)
+   
 
 def matches(s, pattern):
     ...
@@ -88,7 +86,6 @@ def invoice(c, o):
 vehicles = []
 operations = []
 op = menu(True)
-
 
 while True:
     #op = menu(False)
