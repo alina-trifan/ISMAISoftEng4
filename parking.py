@@ -36,9 +36,34 @@ def printClients(v):
         
 def saveEntries(l):
     ...
+
+def pedirtempo():
+
+    tempo= int(input('Qual o tempo que esteve estacionado no parque de estacionamento(Minutos)? '))
+
+    
+    while tempo<0:
+        print ('Tem de ser um valor positivo')
+
+        tempo= int(input('Qual o tempo que esteve estacionado no parque de estacionamento(Minutos)? '))
+
+    return tempo
+
         
 def addParkEntry():
-   ...
+    matricula= str(input('Qual a sua Matrícula? Ex:00-XX-00: ' ))
+
+    if validPlate(matricula):
+        tempo = pedirtempo()
+
+        thisdict = {
+            matricula : tempo
+        }
+
+        print (thisdict)
+    else:
+        print('Tem de introduzir uma matricula válida')
+        
     
 # d.	Escreva uma função que valide se uma string, passada como argumento, representa uma matrícula válida em Portugal. Considere apenas matrículas 
 # posteriores a 2005 compostas por letras no meio como no seguinte exemplo: 00-AA-00. A função deverá devolver um valor lógico Verdadeiro se a matrícula for válida e Falso, caso contrário.
@@ -64,6 +89,7 @@ vehicles = []
 operations = []
 op = menu(True)
 
+print ("ola")
 while True:
     #op = menu(False)
     if op == 0:
