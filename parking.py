@@ -1,6 +1,7 @@
 import csv
 import operator
 import re
+import string
 def menu(text):
     print()
     print('Opcoes disponiveis:')
@@ -31,43 +32,49 @@ def loadClients():
         print(vehicles)
         print(f'Foram importados {contador} registos.')
         return vehicles
+    
 def printClients(v):
+    if not vehicles:
+        print("Não há registos!")
     lista = vehicles
     lista.sort(key=operator.itemgetter(2))
     for row in lista:
         print(f'{row[2]} : ({row[0]}, {row[1]})')
+        
 def saveEntries(l):
         totalOperacoes = len(operations)
-        with open('parque.csv','w',newline='',delimiter=";") as file:
-            file1 = csv.writer(file)
-            for i in range(0,quantidade):
-                ficheiro.writerow(operations[i])
+        with open('parque.csv','w',newline='') as file:
+            file1 = csv.writer(file, delimiter=';')
+            for i in range(0,totalOperacoes):
+                file1.writerow(operations[i])
         print("Foram salvas ",totalOperacoes,"entradas.")
         return file1
         
 def addParkEntry():
-    registos = []
     matricula = input("Matricula:")
+    matricula = matricula.upper()
     while(validPlate(matricula) != True):
         print("Matrícula inválida!!")
         matricula = input("Matricula:")
-    registos.append(matricula)
+        matricula = matricula.upper()
+    operations.append(matricula)
     duracao = input("Duracao:")
     if duracao.isnumeric() and int(duracao) >= 1:
-        registos.append(duracao)
+        operations.append(duracao)
     else:
         print("A duracao tem que ser superior a 1!")
         duracao = input("Duracao:")
-        registos.append(duracao)
-    print(f'Matricula registada:{matricula} Duracao:{duracao}')
-    return(registos)
+        operations.append(duracao)
+    print(f'\nMatricula registada:{matricula}\nDuracao:{duracao} minutos')
+    return(operations)
+
 def validPlate(s):
     plate_format = bool(re.search('[0-9]{2}[-][A-Z]{2}[-][0-9]{2}', s))
     return plate_format
+
 def matches(s, pattern):
     ...
-    
-    
+       
 def printClientPlates(c):
     clientes=[]
     for i in range(0,len(vehicles)):
@@ -83,8 +90,7 @@ def printClientPlates(c):
 
 
 def invoice(c, o):
-     ...
-
+    ...
 
 ###############################################################################
 vehicles = []
