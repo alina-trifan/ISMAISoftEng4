@@ -51,18 +51,24 @@ def pedirtempo():
 
         
 def addParkEntry():
-    matricula= str(input('Qual a sua Matrícula? Ex:00-XX-00: ' ))
+    
+    while True:
 
-    if validPlate(matricula):
-        tempo = pedirtempo()
+        matricula= str(input('Qual a sua Matrícula? Ex:00-XX-00: ' ))
 
-        thisdict = {
-            matricula : tempo
-        }
+        if validPlate(matricula):
+            tempo = pedirtempo()
 
-        print (thisdict)
-    else:
-        print('Tem de introduzir uma matricula válida')
+            dicionariomatriculas = {
+                matricula : tempo
+            }
+            print ('Inserido com sucesso: ')
+
+            print(dicionariomatriculas)
+
+            return dicionariomatriculas
+        else:
+            print('Tem de introduzir uma matricula válida')
         
     
 # d.	Escreva uma função que valide se uma string, passada como argumento, representa uma matrícula válida em Portugal. Considere apenas matrículas 
