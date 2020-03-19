@@ -89,7 +89,6 @@ vehicles = []
 operations = []
 op = menu(True)
 
-print ("ola")
 while True:
     #op = menu(False)
     if op == 0:
