@@ -1,4 +1,7 @@
+import csv
+import operator
 import re
+
 def menu(text):
     print()
     print('Opcoes disponiveis:')
@@ -16,7 +19,6 @@ def menu(text):
     o = int(input('Opcao? '))
     return o
 
-
 def loadClients ():
     contador=0
     l = []
@@ -26,53 +28,56 @@ def loadClients ():
         l.append(linha) 
         contador +=1
     return l
-
-
-def printClients(v):
-    print(l)
-    ordenado = []
-    ordenar = sorted(l,key=operator.itemgetter(2))
-    #return ordenar
-    for i in range(len(ordenar)):
-        #print(v)
-        print(l[2], ": (", l[0], ",", l[1], ")") 
+    
+def printClients(l):
+    ordenar = sorted(vehicle,key=operator.itemgetter(2))
+    for linha in ordenar:
+        print(linha[2], ": (", linha[0], ",", linha[1], ")")     
         
 def saveEntries(l):
-    ...
+    if not operations:
+        print("Parque Vazio")
+    else:
+        qtd = len(operations)
+        with open('parque.csv',newline='',delimiter=";") as file:
+            f_parque = csv.writer(file)
+            for i in range(0,qtd):
+                f_parque.writerow(operations[i])
+        print(qtd,"linhas inseridas")
+        return f_parque
         
 def addParkEntry():
-   duracao = ""
-   matricula = ""
-   i = 0 #contador para a duração
-   p = 0 # contador para a matricula
-   while p != 1:
-       matricula = input("Introduza a matricula no formato 00-AA-00\n")
-       if verifica_matricula(matricula) == False:
-           print("Não introduziu uma matricula válida")
-       else:
-           p +=1 # validou a matricula e passa para o passo seguinte
-   return matricula
-   while i != 1:        
-       duracao = input("Introduza a duração\n")
-       if duracao.isdigit() and int(duracao) > 0:
-           i += 1 #validou a duração e passa para o passo seguinte
-       else:
-           print("Não introduziu um numero válido")
-   print(matricula," - ",duracao)
-   return duracao
-    
-def validPlate(s):
-	match = re.search(r"[0-9]{2}[-][a-zA-Z]{2}[-][0-9]{2}", string)  
-    	return False if match == None\
-        	else True
+    duracao = ""
+    matricula = ""
+    entrada = []
+    i = 0 #contador para a duração
+    p = 0 # contador para a matricula
+    while p != 1:
+        matricula = input("Introduza a matricula no formato 00-AA-00\n")
+        if verifica_matricula(matricula) == False:
+            print("Não introduziu uma matricula válida")
+        else:
+            p +=1 # validou a matricula e passa para o passo seguinte
+    entrada.append(matricula)
+    while i != 1:        
+        duracao = input("Introduza a duração\n")
+        if duracao.isdigit() and int(duracao) > 0:
+            i += 1 #validou a duração e passa para o passo seguinte
+        else:
+            print("Não introduziu um numero válido")
+    print(matricula," - ",duracao)
+    entrada.append(duracao)
+    return(entrada)    
 
-	
+def verifica_matricula (string):  
+    match = bool(re.search(r'\d{2}-[a-zA-Z]{2}-\d{2}', string))
+    return match
+
 def matches(s, pattern):
-    ...
-    
-    
+	return(s, pattern)
+   
 def printClientPlates(c):
-	clientes = []
+    clientes = []
     	for carro in vehicle:
 		if carro[2] not in clientes:
 	    	clientes.append(carro[2])
@@ -83,10 +88,8 @@ def printClientPlates(c):
 			matriculas.append(vehicle[x][0])        
 		print(cliente, ": ", matriculas, "") 
 
-
-
 def invoice(c, o):
-    ...
+	return(c, o)
 
 ###############################################################################
 vehicles = []
@@ -94,23 +97,26 @@ operations = []
 op = menu(True)
 
 while True:
-    op = menu(False)
+    #op = menu(False)
     if op == 0:
         print('Obrigado por usar o nosso software!')
         break;
         
     elif op == 1:
         vehicles += loadClients()
+        op = menu(True)
         
     elif op == 2:
         printClients(vehicles)
+        op = menu(True)
 
     elif op == 3:
         printClientPlates(vehicles)
+        op = menu(True)
         
     elif op == 4:
         operations.append(addParkEntry())
-    
+        
     elif op == 5:
         saveEntries(operations)
         
