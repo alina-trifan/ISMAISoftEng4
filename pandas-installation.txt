@@ -1,0 +1,20 @@
+*2020/03/11*
+*2020
+
+--------------------------Pandas------------------------------
+
+Biblioteca de Software criada para a linguagem Python para manipulação e análise de dados, especialmente, estruturas e operações para manipular tabelas numéricas e séries temporais.
+
+Software Livre
+Licença BSD
+
+
+*INSTALAÇÃO*  
+
+1-Fechar a IDE que está a utilizar 
+2-Abrir o prompt de comando do seu Sistema Operativo
+3-Digitar o comando python -m pip install pandas
+4-Abrir novamente a IDE e aguardar atualização
+
+
+
