@@ -20,6 +20,7 @@ def menu(text):
     return o
 
 def loadClients ():
+
     contador=0
     l = []
     Lista = open('ep1.csv')
@@ -33,7 +34,7 @@ def printClients(l):
     ordenar = sorted(vehicle,key=operator.itemgetter(2))
     for linha in ordenar:
         print(linha[2], ": (", linha[0], ",", linha[1], ")")     
-        
+    
 def saveEntries(l):
     if not operations:
         print("Parque Vazio")
@@ -100,7 +101,7 @@ while True:
     #op = menu(False)
     if op == 0:
         print('Obrigado por usar o nosso software!')
-        break;
+        break
         
     elif op == 1:
         vehicles += loadClients()
