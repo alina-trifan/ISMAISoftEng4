@@ -41,16 +41,53 @@ def printClients(v):
     
     lista.sort(key= lambda l: (l[2],l[0]))
     print(lista)
-    
+
+matriculas=[]
+duracao=[]
+
 def saveEntries(l):
-    ...
+    matriculas=[]
+    parking=open('parque.csv', 'w')
+    with parking:
+        writer = csv.writer(parking)
+        writer.writerows(matriculas)
+
+    duracao=[]
+    parking=open('parque.csv', 'w')
+    with parking:
+        writer = csv.writer(parking)
+        writer.writerow(duracao)
         
 def addParkEntry():
-   ...
+    matx = input('Introduz a matricula: ')
+    
+    while (validPlate(matx) !=True):
+            print("Invalida!")
+            matx = input('Introduz a matricula novamente: ')
+
+    matriculas.append(matx)
+    
+        
+        
+        
+    durx=int(input('Duração: '))
+    if durx<0:
+        print('Invalida!')
+            
+    else:
+        duracao.append(durx)
+        print(matriculas)
+        print(duracao)
+        
+
+    return matriculas
+    return duracao
     
 
 def validPlate(s):
-	...
+    import re
+    matx = bool(re.search("^[0-9]{2}-[A-Z]{2}-[0-9]{2}", s))
+    return matx;
 
 def matches(s, pattern):
     ...
@@ -69,7 +106,7 @@ operations = []
 op = menu(True)
 
 while True:
-   ## op = menu(False)
+    op = menu(False)
     if op == 0:
         print('Obrigado por usar o nosso software!')
         break
