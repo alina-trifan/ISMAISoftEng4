@@ -42,13 +42,13 @@ def printClients(v):
         print(f'{row[2]} : ({row[0]}, {row[1]})')
         
 def saveEntries(l):
-        totalOperacoes = len(operations)
-        with open('parque.csv','w',newline='') as file:
-            file1 = csv.writer(file, delimiter=';')
-            for i in range(0,totalOperacoes):
-                file1.writerow(operations[i])
-        print("Foram salvas ",totalOperacoes,"entradas.")
-        return file1
+    totalOperacoes = len(operations)
+    with open('parque.csv','w',newline='') as file:
+        file1 = csv.writer(file, delimiter=';')
+        for i in range(0,totalOperacoes):
+            file1.writerow(operations[i])
+    print(f'Ficheiro gravado com sucesso!')
+    return file1
         
 def addParkEntry():
     matricula = input("Matricula:")
@@ -90,8 +90,21 @@ def printClientPlates(c):
 
 
 def invoice(c, o):
-    ...
+    custoTotal = 0
+    parque = []
+    with open('ep1.csv') as csv_file:
+        reader = csv.reader(csv_file, delimiter=';')
+        for row in reader:
+            parque.append(row)
+    while True:
+        nif = input("NIF:")
+        if len(nif) == 9:
+            break
+        else:
+            print("NIF inválido!")
+    print(f'Fatura NIF: {nif}')
 
+    print('\nMatricula Marca Duracao Custo')
 ###############################################################################
 vehicles = []
 operations = []
