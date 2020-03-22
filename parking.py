@@ -30,42 +30,49 @@ def loadClients ():
 
 
 def printClients(v):
-   s = sorted(v, key = lambda x: (x[2], x[1]))
-   for client in s:
-    print(client[2]+":('"+client[0]+"','"+client[1]+"')")
+    if not v :
+        print("Não existem clientes!")
+    else :
+        s = sorted(v, key = lambda x: (x[2], x[1]))
+        for client in s:
+            print(client[2]+" : ('"+client[0]+"','"+client[1]+"')")
+
         
 def saveEntries(l):
-    ...
+    import csv
+    if not l :
+        print("Não existem entradas no Parque!")
+    else :
+        from collections import OrderedDict
+        # l = [{'matricula' : '34-DF-54','tempo' : 54}, 
+        # {'matricula' : '34-DF-54','tempo' : 50}, 
+        # {'matricula' : '34-DF-54','tempo' : 52}]
+        #order list
+        items = sorted(l, key=lambda d: d['tempo'], reverse=True)   
+        #get header names     
+        keys = items[0].keys()
+        with open('parque.csv', 'w') as output_file:
+            dict_writer = csv.DictWriter(output_file, keys, delimiter=';')
+            dict_writer.writeheader()
+            dict_writer.writerows(items)      
+        print("Ficheiro gravado com sucesso!")
 
 def pedirtempo():
-
-    tempo= int(input('Qual o tempo que esteve estacionado no parque de estacionamento(Minutos)? '))
-
-    
+    tempo= int(input('Qual o tempo que esteve estacionado no parque de estacionamento(Minutos)? '))    
     while tempo<0:
         print ('Tem de ser um valor positivo')
-
         tempo= int(input('Qual o tempo que esteve estacionado no parque de estacionamento(Minutos)? '))
-
     return tempo
-
         
-def addParkEntry():
-    
+def addParkEntry():    
     while True:
-
         matricula= str(input('Qual a sua Matrícula? Ex:00-XX-00: ' ))
-
         if validPlate(matricula):
             tempo = pedirtempo()
-
             dicionariomatriculas = {
-                matricula : tempo
+                'matricula' : matricula, 'tempo' : tempo
             }
             print ('Inserido com sucesso: ')
-
-            print(dicionariomatriculas)
-
             return dicionariomatriculas
         else:
             print('Tem de introduzir uma matricula válida')
@@ -82,7 +89,23 @@ def matches(s, pattern):
     
     
 def printClientPlates(c):
-    ...
+    if not c :
+        print("Não existem clientes!")
+    else :
+        clients = []
+        for record in c:
+            if record[2] not in clients:
+                clients.append(record[2])
+                
+        for client in clients:
+            plates = []
+            for record in c :
+                if client == record[2] :
+                    plates.append(record[0])
+        
+            # imprimir matrículas por cliente - nif
+            print(client, ": ", plates)   
+
 
 
 def invoice(c, o):
@@ -109,7 +132,7 @@ while True:
         printClientPlates(vehicles)
         
     elif op == 4:
-        operations.append(addParkEntry())
+        operations.append(addParkEntry())      
     
     elif op == 5:
         saveEntries(operations)
